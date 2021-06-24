@@ -36,8 +36,7 @@ master.wait_heartbeat()
 # where 0 is full reverse, 500 is no output and 1000 is full throttle.
 # x,y and r will be between [-1000 and 1000].
 counter =  0
-while True: 
-
+for i in range(10000000):
     master.mav.manual_control_send(
     master.target_system,
     500,
