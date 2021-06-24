@@ -39,10 +39,10 @@ counter =  0
 for i in range(10000000):
     master.mav.manual_control_send(
     master.target_system,
-    500,
-    -500,
-    250,
-    500,
+    1000,
+    -1000,
+    0,
+    1000,
     0)
     
 
