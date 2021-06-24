@@ -32,9 +32,9 @@ def arm_protocol(desiredAltitude):
 
 	# Always arm motors in Guided mode, then arm the vehicle
 	print("Arming motors")
-	vehicle.mode = VehicleMode("GUIDED")
+	vehicle.mode = VehicleMode("MANUAL")
 
-	while not vehicle.mode.name == "GUIDED":
+	while not vehicle.mode.name == "MANUAL":
 		print "CHANGING MODES ..."
 		time.sleep(1)
 
@@ -47,10 +47,6 @@ def arm_protocol(desiredAltitude):
 
 	print "current mode %s" % vehicle.mode.name
 	#If the vehicle hasn't armed for some reason
-
-	while not vehicle.armed:
-		print("Vehicle has had a problem with arming")
-		time.sleep(1)
 
 
 	while True:
