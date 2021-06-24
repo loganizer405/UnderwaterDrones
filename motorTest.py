@@ -46,7 +46,7 @@ while counter < 10:
     500,
     0)
 
-    counter++
+    counter += 1
     time.sleep(1)
 
 # To active button 0 (first button), 3 (fourth button) and 7 (eighth button)
