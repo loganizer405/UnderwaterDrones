@@ -30,10 +30,6 @@ def arm_protocol(desiredAltitude):
 	#Checking whether we can arm the vehicle
 	
 
-	while not vehicle.is_armable:
-		print("Waiting to arm")
-		time.sleep(1)
-
 	# Always arm motors in Guided mode, then arm the vehicle
 	print("Arming motors")
 	vehicle.mode = VehicleMode("GUIDED")
