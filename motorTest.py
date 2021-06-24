@@ -35,13 +35,19 @@ master.wait_heartbeat()
 # Warning: Because of some legacy workaround, z will work between [0-1000]
 # where 0 is full reverse, 500 is no output and 1000 is full throttle.
 # x,y and r will be between [-1000 and 1000].
-master.mav.manual_control_send(
+counter =  0
+while counter < 10: 
+
+    master.mav.manual_control_send(
     master.target_system,
     500,
     -500,
     250,
     500,
     0)
+
+    counter++
+    time.sleep(1)
 
 # To active button 0 (first button), 3 (fourth button) and 7 (eighth button)
 # It's possible to check and configure this buttons in the Joystick menu of QGC
