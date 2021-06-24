@@ -37,18 +37,7 @@ master.wait_heartbeat()
 # x,y and r will be between [-1000 and 1000].
 counter =  0
 for i in range(10000000):
-    master.mav.manual_control_send(
-    master.target_system,
-    1000,
-    -1000,
-    0,
-    1000,
-    0)
-    
-
-# To active button 0 (first button), 3 (fourth button) and 7 (eighth button)
-# It's possible to check and configure this buttons in the Joystick menu of QGC
-buttons = 1 + 1 << 3 + 1 << 7
+    buttons = 268435456
 master.mav.manual_control_send(
     master.target_system,
     0,
@@ -56,3 +45,7 @@ master.mav.manual_control_send(
     500, # 500 means neutral throttle
     0,
     buttons)
+    
+
+# To active button 0 (first button), 3 (fourth button) and 7 (eighth button)
+# It's possible to check and configure this buttons in the Joystick menu of QGC
