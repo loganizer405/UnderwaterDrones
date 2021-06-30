@@ -37,7 +37,7 @@ master.wait_heartbeat()
 # x,y and r will be between [-1000 and 1000].
 counter =  0
 for i in range(10000000):
-    buttons = 1 + 1 << 3 + 1 << 7
+    buttons = 1 + (1 << 3) + (1 << 7)
 master.mav.manual_control_send(
     master.target_system,
     0,
@@ -49,3 +49,7 @@ master.mav.manual_control_send(
 
 # To active button 0 (first button), 3 (fourth button) and 7 (eighth button)
 # It's possible to check and configure this buttons in the Joystick menu of QGC
+# how this works: the << and >> are left and right bit shifts respecively.
+# this means the above expression 1 + (1 << 3) + (1 << 7) equals the value 137.
+# 137 in binary is 10001001. A zero corresponds to button off, a 1 corresponds to button on.
+# this means buttons 0, 3, and 7 are on.
