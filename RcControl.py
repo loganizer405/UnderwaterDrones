@@ -38,8 +38,8 @@ master.wait_heartbeat()
 for i in range(10000):
     master.mav.manual_control_send(
         master.target_system,
-        1000,  # x
+        0,  # x
         0,  # y
-        500,  # z
-        500,  # r
+        0,  # z
+        1000,  # r
         0)  # buttons
