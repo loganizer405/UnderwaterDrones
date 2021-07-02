@@ -9,9 +9,10 @@ from pymavlink import mavutil
 import time
 
 # Create the connection
-master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
-wait_conn()
+
 # Wait a heartbeat before sending commands
+
+master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 
 
 def wait_conn():
@@ -29,6 +30,8 @@ def wait_conn():
         msg = master.recv_match()
         time.sleep(0.5)
 
+
+wait_conn()
 
 master.wait_heartbeat()
 
