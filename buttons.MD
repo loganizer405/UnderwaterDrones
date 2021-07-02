@@ -34,8 +34,8 @@ buttons = (1 << 6) + (1 << 7)
 
 # Button Mapping #
 Button	 Function		Binary		Decimal
--------------------------------------------------------
-0	 ----
+
+0	 
 1	 Manual mode		000000000000010	2
 2	 Depth hold mode	000000000000100	4
 3	 Stabilize mode		000000000001000	8
