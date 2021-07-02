@@ -16,9 +16,9 @@ master.wait_heartbeat()
 for i in range(20):
     master.mav.manual_control_send(
         master.target_system,
-        500,
-        -500,
-        250,
-        500,
-        0)
+        1000,  # x
+        0,  # y
+        500,  # z
+        0,  # r
+        0)  # buttons
     time.sleep()
