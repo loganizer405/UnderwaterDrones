@@ -37,7 +37,7 @@ master.wait_heartbeat()
 # x,y and r will be between [-1000 and 1000].
 counter =  0
 for i in range(10000000):
-    buttons = 1
+    buttons = 1 << 13
 master.mav.manual_control_send(
     master.target_system,
     0,
