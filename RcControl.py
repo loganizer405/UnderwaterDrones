@@ -43,4 +43,4 @@ for i in range(20):
         500,  # z
         0,  # r
         0)  # buttons
-    time.sleep()
+    time.sleep(1)
