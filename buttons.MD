@@ -50,3 +50,25 @@ buttons = (1 << 6) + (1 << 7)
 |12	| Decrease gain		|001000000000000|	4196|
 |13	| Brighten lights	|010000000000000|	8192|
 |14 	| Dim lights		|100000000000000|	16384|
+
+# Joystick [Motor] Control #
+
+Manual control syntax:
+
+master.mav.manual_control_send(
+    master.target_system,
+    x,
+    y,
+    z, 
+    r,
+    buttons)
+
+x is forward and backward movement. 1000 is full forward, -1000 is full backward.
+y is left and right movement. 	    1000 is full right, -1000 is full left.
+z corresponds to separate slider movement. 1000 is maximum positive thrust, -1000 is maxiumum negative thrust
+r is rotation (yaw).	  	 1000 is full counterclockwise, -1000 is full clockwise.
+
+Each of these must have a value from -1000 to 1000.
+Buttons can be set to anything shown above, or, if only control of the motors is desired, simply use 0.
+
+To control motors individually, use RC_CONTROL_RAW as specified in the MAVLink docs.
