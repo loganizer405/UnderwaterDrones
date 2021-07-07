@@ -7,6 +7,19 @@ This message is able to fully replace the joystick inputs.
 # Import mavutil
 from pymavlink import mavutil
 import time
+import argparse
+
+
+parser = argparse.ArgumentParser(description='commands')
+parser.add_argument('--xThrottle')
+parser.add_argument('--yThrottle')
+parser.add_argument('--zThrottle')
+args = parser.parse_args()
+
+x_Throttle = args.xThrottle
+y_Throttle = args.yThrottle
+z_Throttle = args.zThrottle
+
 
 # Create the connection
 
@@ -33,13 +46,18 @@ def wait_conn():
 
 wait_conn()
 
+
+def manualControl(x, y, z):
+    master.mav.manual_control_send(
+        master.target_system,
+        x,  # x
+        y,  # y
+        z,  # z
+        0,  # r
+        0)  # buttons
+
+
 master.wait_heartbeat()
 
 for i in range(10000):
-    master.mav.manual_control_send(
-        master.target_system,
-        0,  # x
-        0,  # y
-        0,  # z
-        1000,  # r
-        0)  # buttons
+    manualControl(x_Throttle, y_Throttle, z_Throttle)
