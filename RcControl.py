@@ -63,4 +63,4 @@ for i in range(10000):
     manualControl(x_Throttle, y_Throttle, z_Throttle)
 
 for i in range(10000):
-    manualControl(0, 1000, 500)
+    manualControl(y_Throttle, x_Throttle, z_Throttle)
