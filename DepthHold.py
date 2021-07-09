@@ -70,4 +70,4 @@ def depthHold(depth, vehicle):
             print("Current Depth: ". current_depth)
 
 
-depthHold(-10)
+depthHold(-10, vehicle)
