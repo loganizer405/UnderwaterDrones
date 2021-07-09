@@ -56,11 +56,11 @@ vehicle = connectSub()
 
 
 def depthHold(depth, vehicle):
-    current_depth = vehcle.location.global_relative_frame.alt
+    current_depth = vehicle.location.global_relative_frame.alt
 
     if current_depth > depth*0.95:
         while current_depth > depth*0.95:
-            current_depth = vehcle.location.global_relative_frame.alt
+            current_depth = vehicle.location.global_relative_frame.alt
             print("Current Depth: ", current_depth)
 
     if current_depth < depth * 0.95:
@@ -70,4 +70,4 @@ def depthHold(depth, vehicle):
             print("Current Depth: ". current_depth)
 
 
-depthHold(-10)
+depthHold(-10, vehicle)
