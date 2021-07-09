@@ -7,25 +7,20 @@ This message is able to fully replace the joystick inputs.
 # Import mavutil
 from pymavlink import mavutil
 import time
+from dronekit import connect, VehicleMode, LocationGlobalRelative, APIException
 import argparse
 
 
-parser = argparse.ArgumentParser(description='commands')
-parser.add_argument('--xThrottle')
-parser.add_argument('--yThrottle')
-parser.add_argument('--zThrottle')
-args = parser.parse_args()
-
-x_Throttle = args.xThrottle
-y_Throttle = args.yThrottle
-z_Throttle = args.zThrottle
+def connectSub():
+    vehicle = connect("127.0.0.1:14550", wait_ready=True)
+    return vehicle
 
 
 # Create the connection
 
 # Wait a heartbeat before sending commands
 
-master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
+master = mavutil.mavlink_connection('127.0.0.1:14550')
 
 
 def wait_conn():
@@ -44,9 +39,6 @@ def wait_conn():
         time.sleep(0.5)
 
 
-wait_conn()
-
-
 def manualControl(x, y, z):
     master.mav.manual_control_send(
         master.target_system,
@@ -57,10 +49,25 @@ def manualControl(x, y, z):
         0)  # buttons
 
 
+print("Watiing for connection")
 master.wait_heartbeat()
+print("HeatBeat received")
+vehicle = connectSub()
 
-for i in range(10000):
-    manualControl(x_Throttle, y_Throttle, z_Throttle)
 
-for i in range(10000):
-    manualControl(y_Throttle, x_Throttle, z_Throttle)
+def depthHold(depth, vehicle):
+    current_depth = vehcle.location.global_relative_frame.alt
+
+    if current_depth > depth*0.95:
+        while current_depth > depth*0.95:
+            current_depth = vehcle.location.global_relative_frame.alt
+            print("Current Depth: ", current_depth)
+
+    if current_depth < depth * 0.95:
+        while current_depth < depth * 0.95:
+            current_depth = vehicle.locaiton.global_relative_frame.alt
+            manualControl(0, 0, 0)
+            print("Current Depth: ". current_depth)
+
+
+depthHold(-10)
