@@ -3,7 +3,7 @@
 ## Bit Shifting ##
 
 See motorTest.py:
-buttons = 1 + (1 << 3) + (1 << 7)
+`buttons = 1 + (1 << 3) + (1 << 7)`
 
 This is an operation called bit shifting. This is a simple method of changing binary numbers. It is what it sounds like: the bits are shifted, left or right. << is left bit shifting and >> is right bit shifting. The first number is the operand which we modify, and the second number is how many bits to shift. For example,
 15 << 2
@@ -22,14 +22,14 @@ The bit position represents the button. 1 in that place corresponds to on, 0 is 
 Each of the buttons on the joystick are assigned a number. We do not have a list of these but the mapping is apparently available in QGroundControl.
 
 From motorTest.py:
-buttons = 1 + (1 << 3) + (1 << 7)
+`buttons = 1 + (1 << 3) + (1 << 7)`
 Solution to the bit shift:
 137 = b10001001
 
 This means buttons 0, 3, and 7 are on, while the others are off.
 
 So, in order to turn buttons on, simply use 1 and the bit shift. To turn multiple buttons on, use addition. For example, to turn on buttons 6 and 7, use
-buttons = (1 << 6) + (1 << 7)
+`buttons = (1 << 6) + (1 << 7)`
 
 
 # Button Mapping #
@@ -55,20 +55,20 @@ buttons = (1 << 6) + (1 << 7)
 
 Manual control syntax:
 
-master.mav.manual_control_send(  
+`master.mav.manual_control_send(  
     master.target_system,  
     x,  
     y,  
     z,   
     r,  
-    buttons)  
+    buttons)  `
 
 x is forward and backward movement. 1000 is full forward, -1000 is full backward.  
 y is left and right movement. 	    1000 is full right, -1000 is full left.  
-z corresponds to separate slider movement. 1000 is maximum positive thrust, -1000 is maxiumum negative thrust  
+z corresponds to vertical movement. 1000 is maximum positive thrust, 0 is maximum negative thrust? 500 is neutral.  
 r is rotation (yaw).	  	 1000 is full counterclockwise, -1000 is full clockwise.  
 
 Each of these must have a value from -1000 to 1000.  
 Buttons can be set to anything shown above, or, if only control of the motors is desired, simply use 0.
 
-To control motors individually, use RC_CONTROL_RAW as specified in the MAVLink docs.
+To control motors individually, use RC_CONTROL_RAW as specified in the [MAVLink docs](https://mavlink.io/en/messages/common.html#MANUAL_CONTROL).
