@@ -49,8 +49,10 @@ def manualControl(x, y, z):
         0)  # buttons
 
 
+print("Watiing for connection")
 wait_conn()
 master.wait_heartbeat()
+print("HeatBeat received")
 vehicle = connectSub()
 
 
