@@ -20,7 +20,7 @@ def connectSub():
 
 # Wait a heartbeat before sending commands
 
-master = mavutil.mavlink_connection('udpin:0.0.0.0:14450')
+master = mavutil.mavlink_connection('udpout0.0.0.0:9000')
 
 
 def wait_conn():
