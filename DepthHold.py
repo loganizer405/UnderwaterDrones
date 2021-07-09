@@ -70,7 +70,7 @@ def depthHold(depth, vehicle):
             current_depth = vehicle.location.global_relative_frame.alt
             manualControl(0, 0, 1000)
             print("Going uo !")
-            print("Current Depth: ". current_depth)
+            print("Current Depth: ", current_depth)
 
 
 depthHold(-10, vehicle)
