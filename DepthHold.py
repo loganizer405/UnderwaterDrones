@@ -20,7 +20,7 @@ def connectSub():
 
 # Wait a heartbeat before sending commands
 
-master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
+master = mavutil.mavlink_connection('udpin:0.0.0.0:14450')
 
 
 def wait_conn():
@@ -50,7 +50,6 @@ def manualControl(x, y, z):
 
 
 print("Watiing for connection")
-wait_conn()
 master.wait_heartbeat()
 print("HeatBeat received")
 vehicle = connectSub()
