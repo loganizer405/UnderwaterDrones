@@ -12,7 +12,7 @@ import argparse
 
 
 def connectSub():
-    vehicle = connect("udpin:0.0.0.0:14450", wait_ready=True)
+    vehicle = connect("127.0.0.1:14550", wait_ready=True)
     return vehicle
 
 
@@ -20,7 +20,7 @@ def connectSub():
 
 # Wait a heartbeat before sending commands
 
-master = mavutil.mavlink_connection('udpin:0.0.0.0:14450')
+master = mavutil.mavlink_connection('127.0.0.1:14550')
 
 
 def wait_conn():
