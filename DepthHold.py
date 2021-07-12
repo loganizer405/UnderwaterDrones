@@ -52,7 +52,9 @@ def manualControl(x, y, z):
 print("Watiing for connection")
 master.wait_heartbeat()
 print("HeatBeat received")
+
 vehicle = connectSub()
+vehicle_armed = True
 
 
 def depthHold(depth, vehicle):
