@@ -61,8 +61,8 @@ def depthHold(depth, vehicle):
     if current_depth > depth*0.95:
         while current_depth > depth*0.95:
             current_depth = vehicle.location.global_relative_frame.alt
-            print("GoingDown!")
-            manualControl(0, 0, -1000)
+            print("Going Down!")
+            manualControl(0, 0, 0)
             print("Current Depth: ", current_depth)
 
     if current_depth < depth * 0.95:
