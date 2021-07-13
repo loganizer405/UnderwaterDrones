@@ -69,7 +69,7 @@ print("<<<<<<ARMED>>>>>>")
 
 print(list(master.mode_mapping()))
 
-mode = 'AUTO'
+mode = 'MANUAL'
 mode_id = master.mode_mapping()[mode]
 master.mav.set_mode_send(
     master.target_system,
