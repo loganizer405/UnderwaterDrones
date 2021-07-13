@@ -46,7 +46,7 @@ def manualControl(x, y, z):
 
 def set_target_depth(depth):
     master.mav.set_position_target_global_int_send(int(1e3 * (time.time() - psutil.boot_time())), master.target_system,
-                                                   master.target_component, mavutil.MAV_FRAME_GLOBAL_INT, 0xdfe, 0, 0, depth, 0, 0, 0, 0, 0, 0, 0, 0)
+                                                   master.target_component, mavutil.mavlink.MAV_FRAME_GLOBAL_INT, 0xdfe, 0, 0, depth, 0, 0, 0, 0, 0, 0, 0, 0)
 
 
 wait_conn()
