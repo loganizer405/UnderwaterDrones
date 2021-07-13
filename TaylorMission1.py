@@ -47,11 +47,10 @@ def manualControl(x, y, z):
 def set_target_depth(depth):
     current_depth = vehicle.location.global_relative_frame.alt
     print(current_depth)
-
-    master.mav.set_position_target_global_int_send(int(1e3 * (time.time() - psutil.boot_time())), master.target_system,
-                                                   master.target_component, mavutil.mavlink.MAV_FRAME_GLOBAL_INT, 0xdfe, 0, 0, depth, 0, 0, 0, 0, 0, 0, 0, 0)
-    current_depth = vehicle.location.global_relative_frame.alt
-    print(current_depth)
+    while current_depth > depth:
+        manualControl(0, 0, 0)
+        current_depth = vehicle.location.global_relative_frame.alt
+        print(current_depth)
 
 
 wait_conn()
