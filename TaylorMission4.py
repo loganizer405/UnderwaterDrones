@@ -15,8 +15,6 @@ def connectSub():
 
 # Wait a heartbeat before sending commands
 
-master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
-
 
 def wait_conn():
     """
@@ -34,6 +32,22 @@ def wait_conn():
         time.sleep(0.5)
 
 
+def set_target_depth(depth):
+
+    master.mav.set_position_target_global_int_send(
+        int(1e3 * (time.time() - boot_time)),  # ms since boot
+        master.target_system, master.target_component,
+        coordinate_frame=mavutil.mavlink.MAV_FRAME_GLOBAL_INT,
+        type_mask=0xdfe,  # ignore everything except z position
+        # (x, y WGS84 frame pos - not used), z [m]
+        lat_int=0, long_int=0, alt=depth,
+        vx=0, vy=0, vz=0,  # velocities in NED frame [m/s] (not used)
+        afx=0, afy=0, afz=0, yaw=0, yaw_rate=0
+        # accelerations in NED frame [N], yaw, yaw_rate
+        #  (all not supported yet, ignored in GCS Mavlink)
+    )
+
+
 def manualControl(x, y, z):
     master.mav.manual_control_send(
         master.target_system,
@@ -44,36 +58,10 @@ def manualControl(x, y, z):
         0)  # buttons
 
 
-def set_target_depth(depth):
-    current_depth = vehicle.location.global_relative_frame.alt
-    print(current_depth)
-    if current_depth > depth:
-        while current_depth > depth:
-            manualControl(0, 0, -1000)
-            current_depth = vehicle.location.global_relative_frame.alt
-            print(current_depth)
-    else:
-        while current_depth < depth:
-            manualControl(0, 0, 0)
-            current_depth = vehicle.location.global_relative_frame.alt
-            print(current_depth)
-
-
+master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 wait_conn()
-print("<<<<<<CONNECTION ESTABLISHED>>>>>>")
-master.wait_heartbeat()
-print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
-
-
-# ARMING:
 vehicle = connectSub()
-vehicle.armed = False
-time.sleep(1)
-master.arducopter_arm()
-time.sleep(1)
-print("<<<<<<ARMED>>>>>>")
 
-print(list(master.mode_mapping()))
 
 mode = 'MANUAL'
 mode_id = master.mode_mapping()[mode]
@@ -85,16 +73,3 @@ master.mav.set_mode_send(
 
 print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
 time.sleep(5)
-
-
-set_target_depth(-10)
-print("TEST FINISHED")
-
-mode = 'POSHOLD'
-mode_id = master.mode_mapping()[mode]
-master.mav.set_mode_send(
-    master.target_system,
-    mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
-    mode_id)
-
-vehicle.armed = False
