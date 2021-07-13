@@ -60,6 +60,7 @@ def manualControl(x, y, z):
 
 master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 wait_conn()
+vehicle = connectSub()
 boot_time = time.time()
 print("<<<<<<CONNECTION ESTABLISHED>>>>>>")
 master.wait_heartbeat()
@@ -71,8 +72,15 @@ DEPTH_HOLD_MODE = master.mode_mapping()[DEPTH_HOLD]
 while not master.wait_heartbeat().custom_mode == DEPTH_HOLD_MODE:
     master.set_mode(DEPTH_HOLD)
 
+current_depth = vehicle.location.global_relative_frame.alt
+
+print("Depth before: ", current_depth)
 # set a depth target
-set_target_depth(-0.5)
+set_target_depth(-1)
+
+time.sleep(0.3)
+current_depth = vehicle.location.global_relative_frame.alt
+print("Depth after: ", current_depth)
 
 
 master.arducopter_disarm()
