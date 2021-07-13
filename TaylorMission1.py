@@ -62,6 +62,7 @@ print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 # ARMING:
 vehicle = connectSub()
 vehicle.armed = False
+time.sleep(1)
 master.arducopter_arm()
 
 print("<<<<<<ARMED>>>>>>")
