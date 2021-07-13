@@ -58,7 +58,6 @@ print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 vehicle = connectSub()
 vehicle.armed = True
 master.arducopter_arm()
-master.motors_armed_wait()
 
 print("<<<<<<ARMED>>>>>>")
 
