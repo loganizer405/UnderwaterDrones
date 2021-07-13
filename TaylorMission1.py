@@ -78,7 +78,7 @@ master.mav.set_mode_send(
     mode_id)
 
 
-print("<<<<<<MODE CHANGED TO GUIDED>>>>>>"q)
+print("<<<<<<MODE CHANGED TO GUIDED>>>>>>")
 time.sleep(5)
 
 
