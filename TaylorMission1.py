@@ -84,4 +84,12 @@ time.sleep(5)
 
 set_target_depth(-1.5)
 print("TEST FINISHED")
+
+mode = 'POSHOLD'
+mode_id = master.mode_mapping()[mode]
+master.mav.set_mode_send(
+    master.target_system,
+    mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+    mode_id)
+
 vehicle.armed = False
