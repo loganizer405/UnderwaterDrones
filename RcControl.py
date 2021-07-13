@@ -44,9 +44,6 @@ def wait_conn():
         time.sleep(0.5)
 
 
-wait_conn()
-
-
 def manualControl(x, y, z):
     master.mav.manual_control_send(
         master.target_system,
@@ -57,10 +54,9 @@ def manualControl(x, y, z):
         0)  # buttons
 
 
+wait_conn()
+
 master.wait_heartbeat()
 
 for i in range(10000):
     manualControl(x_Throttle, y_Throttle, z_Throttle)
-
-for i in range(10000):
-    manualControl(y_Throttle, x_Throttle, z_Throttle)
