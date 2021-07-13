@@ -45,7 +45,8 @@ def manualControl(x, y, z):
 
 
 def set_target_depth(depth):
-    current_depth = vehicle.location.global_relative_frame.alt
+    current_depth = master.mav.global_position_int(
+        int(1e3*(time.time()-boot_time)), 0, 0, 0, 0, )
     print(current_depth)
     if current_depth > depth:
         while current_depth > depth:
@@ -61,6 +62,7 @@ def set_target_depth(depth):
 
 wait_conn()
 print("<<<<<<CONNECTION ESTABLISHED>>>>>>")
+boot_time = time.time()
 master.wait_heartbeat()
 print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 
