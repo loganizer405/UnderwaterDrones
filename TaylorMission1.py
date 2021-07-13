@@ -69,6 +69,16 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 print(list(master.mode_mapping()))
+
+mode = 'GUIDED'
+mode_id = master.mode_mapping()[mode]
+master.mav.set_mode_send(
+    master.target_system,
+    mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+    mode_id)
+
+
+print("<<<<<<MODE CHANGED TO GUIDED>>>>>>"q)
 time.sleep(5)
 
 
