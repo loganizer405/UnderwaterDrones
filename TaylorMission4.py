@@ -32,7 +32,7 @@ def wait_conn():
         time.sleep(0.5)
 
 
-def set_target_depth(depth):
+def set_target_depth(depth, boot_time):
 
     master.mav.set_position_target_global_int_send(
         int(1e3 * (time.time() - boot_time)),  # ms since boot
