@@ -68,6 +68,9 @@ master.arducopter_arm()
 time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
+print(list(master.mode_mapping()))
+time.sleep(5)
+
 
 set_target_depth(-1.5)
 print("TEST FINISHED")
