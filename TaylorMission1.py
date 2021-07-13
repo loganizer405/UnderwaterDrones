@@ -49,13 +49,13 @@ def set_target_depth(depth):
     print(current_depth)
     if current_depth > depth:
         while current_depth > depth:
-            manualControl(0, 0, -1000)
+            manualControl(0, 0, -500)
             current_depth = vehicle.location.global_relative_frame.alt
             print("WE GOT HERE")
             print(current_depth)
     else:
         while current_depth < depth:
-            manualControl(0, 0, 1000)
+            manualControl(0, 0, 500)
             current_depth = vehicle.location.global_relative_frame.alt
             print(current_depth)
 
@@ -89,7 +89,7 @@ print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
 time.sleep(5)
 
 
-set_target_depth(-1.5)
+set_target_depth(-0.5)
 print("TEST FINISHED")
 
 mode = 'POSHOLD'
