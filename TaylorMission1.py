@@ -7,7 +7,7 @@ import psutil
 
 
 def connectSub():
-    vehicle = connect("127.0.0.1:14550", wait_ready=True)
+    vehicle = connect("udpout:0.0.0.0:9000", wait_ready=True)
     return vehicle
 
 
@@ -15,7 +15,7 @@ def connectSub():
 
 # Wait a heartbeat before sending commands
 
-master = mavutil.mavlink_connection('127.0.0.1:14550')
+master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 
 
 def wait_conn():
