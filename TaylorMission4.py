@@ -63,7 +63,7 @@ wait_conn()
 vehicle = connectSub()
 
 
-mode = 'MANUAL'
+mode = 'POSHOLD'
 mode_id = master.mode_mapping()[mode]
 master.mav.set_mode_send(
     master.target_system,
