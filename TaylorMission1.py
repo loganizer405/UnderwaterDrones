@@ -45,13 +45,13 @@ def manualControl(x, y, z):
 
 
 def set_target_depth(depth):
-    current_depth = master.mav.global_position_int(
-        int(1e3*(time.time()-boot_time)), 0, 0, 0, 0, )
+    current_depth = vehicle.location.global_relative_frame.alt
     print(current_depth)
     if current_depth > depth:
         while current_depth > depth:
             manualControl(0, 0, -1000)
             current_depth = vehicle.location.global_relative_frame.alt
+            print("WE GOT HERE")
             print(current_depth)
     else:
         while current_depth < depth:
