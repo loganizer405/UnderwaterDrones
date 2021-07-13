@@ -50,6 +50,7 @@ def set_target_depth(depth):
         master.mav.set_position_target_global_int_send(int(1e3 * (time.time() - psutil.boot_time())), master.target_system,
                                                        master.target_component, mavutil.mavlink.MAV_FRAME_GLOBAL_INT, 0xdfe, 0, 0, depth, 0, 0, 0, 0, 0, 0, 0, 0)
         current_depth = current_depth = vehicle.location.global_relative_frame.alt
+        print("CURRENT_DEPTH: ", current_depth)
 
 
 wait_conn()
@@ -60,7 +61,7 @@ print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 
 # ARMING:
 vehicle = connectSub()
-vehicle.armed = True
+vehicle.armed = False
 master.arducopter_arm()
 
 print("<<<<<<ARMED>>>>>>")
