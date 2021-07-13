@@ -81,7 +81,7 @@ print("<<<<<<MODE CHANGED TO GUIDED>>>>>>")
 time.sleep(5)
 
 
-set_target_depth(-1.5)
+set_target_depth(-10)
 print("TEST FINISHED")
 
 mode = 'POSHOLD'
