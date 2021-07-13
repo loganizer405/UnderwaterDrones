@@ -69,6 +69,6 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 
-set_target_depth(-10)
+set_target_depth(-1.5)
 print("TEST FINISHED")
 vehicle.armed = False
