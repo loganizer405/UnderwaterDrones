@@ -76,7 +76,7 @@ current_depth = vehicle.location.global_relative_frame.alt
 
 print("Depth before: ", current_depth)
 # set a depth target
-set_target_depth(-1)
+set_target_depth(-2)
 
 time.sleep(0.3)
 current_depth = vehicle.location.global_relative_frame.alt

@@ -43,4 +43,4 @@ wait_conn()
 master.wait_heartbeat()
 
 for i in range(10000):
-    manualControl(0, 0, 0)
+    manualControl(0, 0, 1000)
