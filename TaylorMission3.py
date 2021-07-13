@@ -5,17 +5,6 @@ import time
 import argparse
 
 
-parser = argparse.ArgumentParser(description='commands')
-parser.add_argument('--xThrottle')
-parser.add_argument('--yThrottle')
-parser.add_argument('--zThrottle')
-args = parser.parse_args()
-
-x_Throttle = args.xThrottle
-y_Throttle = args.yThrottle
-z_Throttle = args.zThrottle
-
-
 # Create the connection
 
 # Wait a heartbeat before sending commands
@@ -54,4 +43,4 @@ wait_conn()
 master.wait_heartbeat()
 
 for i in range(10000):
-    manualControl(x_Throttle, y_Throttle, z_Throttle)
+    manualControl(0, 0, -1000)
