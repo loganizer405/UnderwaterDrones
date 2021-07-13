@@ -57,9 +57,8 @@ print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 # ARMING:
 vehicle = connectSub()
 vehicle.armed = True
-while not master.motors_armed_wait():
-    print("Waiting to arm")
-    time.sleep(1)
+master.arducopter_arm()
+master.motors_armed_wait()
 
 print("<<<<<<ARMED>>>>>>")
 
