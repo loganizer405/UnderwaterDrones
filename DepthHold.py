@@ -54,7 +54,10 @@ master.wait_heartbeat()
 print("HeatBeat received")
 
 vehicle = connectSub()
-vehicle_armed = True
+
+
+def set_target_depth(depth):
+    master.mav.set_position_target_global_int_sned()
 
 
 def depthHold(depth, vehicle):

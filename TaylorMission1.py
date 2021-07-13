@@ -3,6 +3,7 @@ import time
 from dronekit import connect, VehicleMode, LocationGlobalRelative, APIException
 import argparse
 import math
+import psutil
 
 
 def connectSub():
@@ -44,7 +45,7 @@ def manualControl(x, y, z):
 
 
 def set_target_depth(depth):
-    master.mav.set_position_target_global_int_send(int(1e3 * (time.time() - boot_time)), master.target_system,
+    master.mav.set_position_target_global_int_send(int(1e3 * (time.time() - psutil.boot_time())), master.target_system,
                                                    master.target_component, mavutil.MAV_FRAME_GLOBAL_INT, 0xdfe, 0, 0, depth, 0, 0, 0, 0, 0, 0, 0, 0)
 
 
