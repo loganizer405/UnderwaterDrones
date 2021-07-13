@@ -64,12 +64,9 @@ vehicle = connectSub()
 vehicle.armed = False
 time.sleep(1)
 master.arducopter_arm()
-
+time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
-DEPTH_HOLD = 'ALT_HOLD'
-DEPTH_HOLD_MODE = master.mode_mapping()[DEPTH_HOLD]
-while not master.wait_heartbeat().custom_mode == DEPTH_HOLD_MODE:
-    master.set_mode(DEPTH_HOLD)
+
 
 set_target_depth(-10)
 print("TEST FINISHED")
