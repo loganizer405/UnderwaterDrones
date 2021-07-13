@@ -48,7 +48,7 @@ def set_target_depth(depth):
     current_depth = vehicle.location.global_relative_frame.alt
     print(current_depth)
     while current_depth > depth:
-        manualControl(0, 0, 0)
+        manualControl(0, 0, 1000)
         current_depth = vehicle.location.global_relative_frame.alt
         print(current_depth)
 
