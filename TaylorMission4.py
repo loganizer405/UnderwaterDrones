@@ -77,13 +77,13 @@ for i in range(10000):
     print("GOING DOWN!")
 
 
-mode = 'ALT_HOLD'
+mode = 'POSHOLD'
 mode_id = master.mode_mapping()[mode]
 
 
 print(list(master.mode_mapping()))
 
-while not vehicle.mode == VehicleMode("ALT_HOLD"):
+while not vehicle.mode == VehicleMode("POSHOLD"):
     master.mav.set_mode_send(
         master.target_system,
         mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
