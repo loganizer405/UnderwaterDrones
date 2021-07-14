@@ -61,6 +61,7 @@ def manualControl(x, y, z):
 master = mavutil.mavlink_connection('udpin:0.0.0.0:14550')
 
 wait_conn()
+vehicle = connectSub()
 print("<<<<<<CONNECTION ESTABLISHED>>>>>>")
 boot_time = time.time()
 master.wait_heartbeat()
@@ -81,10 +82,14 @@ mode_id = master.mode_mapping()[mode]
 
 
 print(list(master.mode_mapping()))
-master.mav.set_mode_send(
-    master.target_system,
-    mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
-    mode_id)
+
+while not vehicle.mode == VehicleMode("ALT_HOLD"):
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+    print("CHANGING MODES")
+    time.sleep(0.1)
 
 
 print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
