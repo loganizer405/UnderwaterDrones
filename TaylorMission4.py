@@ -3,7 +3,7 @@ import time
 #from dronekit import connect, VehicleMode, LocationGlobalRelative, APIException
 import argparse
 import math
-import psutil
+
 
 '''
 def connectSub():
