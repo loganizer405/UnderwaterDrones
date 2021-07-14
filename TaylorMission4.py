@@ -7,7 +7,7 @@ import psutil
 
 
 def connectSub():
-    vehicle = connect("udpout:0.0.0.0:9000", wait_ready=True)
+    vehicle = connect("udpin:0.0.0.0:14550", wait_ready=True)
     return vehicle
 
 
