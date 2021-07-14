@@ -66,7 +66,7 @@ boot_time = time.time()
 master.wait_heartbeat()
 print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 
-for i in range(100):
+for i in range(10000):
     manualControl(0, 0, -1000)
     print("GOING DOWN!")
 
