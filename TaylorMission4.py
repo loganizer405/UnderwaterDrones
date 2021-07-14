@@ -1,15 +1,15 @@
 from pymavlink import mavutil
 import time
-from dronekit import connect, VehicleMode, LocationGlobalRelative, APIException
+#from dronekit import connect, VehicleMode, LocationGlobalRelative, APIException
 import argparse
 import math
 import psutil
 
-
+'''
 def connectSub():
     vehicle = connect("udpin:0.0.0.0:14550", wait_ready=True)
     return vehicle
-
+'''
 
 # Create the connection
 
@@ -61,7 +61,7 @@ def manualControl(x, y, z):
 master = mavutil.mavlink_connection('udpin:0.0.0.0:14550')
 
 wait_conn()
-vehicle = connectSub()
+
 print("<<<<<<CONNECTION ESTABLISHED>>>>>>")
 boot_time = time.time()
 master.wait_heartbeat()
