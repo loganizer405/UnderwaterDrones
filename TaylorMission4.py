@@ -60,7 +60,7 @@ def manualControl(x, y, z):
 
 master = mavutil.mavlink_connection("127.0.0.1:14550")
 vehicle = connectSub()
-
+master.wait_heartbeat()
 
 mode = 'POSHOLD'
 mode_id = master.mode_mapping()[mode]
