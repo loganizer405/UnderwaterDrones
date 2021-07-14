@@ -66,6 +66,11 @@ boot_time = time.time()
 master.wait_heartbeat()
 print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 
+master.arducopter_arm()
+time.sleep(2)
+print("<<<<<<ARMED>>>>>>")
+
+
 for i in range(10000):
     manualControl(0, 0, -1000)
     print("GOING DOWN!")
