@@ -58,7 +58,7 @@ def manualControl(x, y, z):
         0)  # buttons
 
 
-master = mavutil.mavlink_connection('localhost:0.0.0.0:14550')
+master = mavutil.mavlink_connection('udpout:localhost:14550')
 
 wait_conn()
 
