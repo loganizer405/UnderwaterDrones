@@ -65,6 +65,9 @@ vehicle = connectSub()
 
 mode = 'POSHOLD'
 mode_id = master.mode_mapping()[mode]
+
+
+print(list(master.mode_mapping()))
 master.mav.set_mode_send(
     master.target_system,
     mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,

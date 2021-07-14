@@ -3,10 +3,10 @@ import cv2
 
 cap = cv2.VideoCapture(0)
 
-while True:
+for i in range(1000):
     ret, frame = cap.read()
-    width = int(cap.get(3))
-    length = int(cap.get(4))
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 80)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 60)
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -16,11 +16,16 @@ while True:
     mask = cv2.inRange(hsv, lower_orange, upper_orange)
 
     result = cv2.bitwise_and(frame, frame, mask=mask)
+    print(result[2])
+    print(result.shape)
 
     cv2.imshow("frame", result)
 
     if cv2.waitKey(1) == ord('q'):
         break
+
+print('size', result.size)
+print('final shape:', result.shape)
 
 cap.release()
 cv2.destroyAllWindows()
