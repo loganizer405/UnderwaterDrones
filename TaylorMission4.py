@@ -59,7 +59,6 @@ def manualControl(x, y, z):
 
 
 master = mavutil.mavlink_connection("127.0.0.1:14550")
-wait_conn()
 vehicle = connectSub()
 
 
