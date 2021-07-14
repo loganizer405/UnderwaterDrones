@@ -58,9 +58,13 @@ def manualControl(x, y, z):
         0)  # buttons
 
 
-master = mavutil.mavlink_connection("127.0.0.1:14550")
-vehicle = connectSub()
+master = mavutil.mavlink_connection('udpin:0.0.0.0:14550')
+
+wait_conn()
+print("<<<<<<CONNECTION ESTABLISHED>>>>>>")
+boot_time = time.time()
 master.wait_heartbeat()
+print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 
 mode = 'POSHOLD'
 mode_id = master.mode_mapping()[mode]
