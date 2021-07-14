@@ -76,7 +76,7 @@ for i in range(10000):
     print("GOING DOWN!")
 
 
-mode = 'POSHOLD'
+mode = 'ALT_HOLD'
 mode_id = master.mode_mapping()[mode]
 
 
