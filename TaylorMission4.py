@@ -72,7 +72,7 @@ print("<<<<<<ARMED>>>>>>")
 
 
 for i in range(10000):
-    manualControl(0, 0, -0.05)
+    manualControl(0.1, 0, -0.05)
     print("GOING DOWN!")
 
 
