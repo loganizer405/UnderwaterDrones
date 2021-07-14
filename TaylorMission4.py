@@ -66,7 +66,7 @@ boot_time = time.time()
 master.wait_heartbeat()
 print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 
-mode = 'POSHOLD'
+mode = 'ALT_HOLD'
 mode_id = master.mode_mapping()[mode]
 
 
