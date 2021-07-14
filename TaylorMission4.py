@@ -66,6 +66,11 @@ boot_time = time.time()
 master.wait_heartbeat()
 print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 
+for i in range(100):
+    manualControl(0, 0, -1000)
+    print("GOING DOWN!")
+
+
 mode = 'ALT_HOLD'
 mode_id = master.mode_mapping()[mode]
 
