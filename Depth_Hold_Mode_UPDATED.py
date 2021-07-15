@@ -37,40 +37,48 @@ while True:
 # arm ArduSub autopilot and wait until confirmed
 master.arducopter_arm()
 master.motors_armed_wait()
+
+
 def move(Z):
     master.mav.set_position_target_local_ned_send(
-        int(1e3 * (time.time() - boot_time)), # ms since boot
+        int(1e3 * (time.time() - boot_time)),  # ms since boot
         master.target_system, master.target_component,
         coordinate_frame=mavutil.mavlink.MAV_FRAME_LOCAL_NED,
-        type_mask=0b0000111111111000, 
-        x=0 , y=0 , z=Z, 
-        vx=0, vy=0, vz=0, # velocities in NED frame [m/s] (not used)
+        type_mask=0b0000111111111000,
+        x=0, y=0, z=Z,
+        vx=0, vy=0, vz=0,  # velocities in NED frame [m/s] (not used)
         afx=0, afy=0, afz=0, yaw=0, yaw_rate=0
     )
+
+
 print("Please enter your desired depth")
 A = input()
 
 Z = float(A)
 
 move(Z)
-time.sleep(0.1)
-while True :
-        msg = master.recv_match()
-        if not msg:
-            continue
-        if msg.get_type() == 'VFR_HUD':
-            data = str(msg)
-            try:
-                data = data.split(":")
-                depth = data[5].split(",")[0]
-            except:
-                print('')
-            print("Current Depth: ",depth)
-            l=float(depth)
-            l=l*-1
+while True:
+    msg = master.recv_match()
+    if not msg:
+        continue
+    if msg.get_type() == 'VFR_HUD':
+        data = str(msg)
+        try:
+            data = data.split(":")
+            depth = data[5].split(",")[0]
+        except:
+            print('Depth not found')
+
+        print("Current Depth: ", depth)
+        positive_depth = float(depth)
+        positive_depth = l*-1
+        if positive_depth > Z:
+            time.sleep(0.1)
+        else:
+            print("Finished")
             break
 
-        
+
 print("--------------Desired depth has been reached!-------------------")
 print("--------------Changing to depth-hold mode... ")
 
@@ -81,14 +89,14 @@ while not master.wait_heartbeat().custom_mode == DEPTH_HOLD_MODE:
     master.set_mode(DEPTH_HOLD)
 print("Depth Hold Mode Activated")
 while True:
-        msg = master.recv_match()
-        if not msg:
-            continue
-        if msg.get_type() == 'VFR_HUD':
-            data = str(msg)
-            try:
-                data = data.split(":")
-                depth = data[5].split(",")[0]
-            except:
-                print('')
-            print("Holding Depth At: ",depth)
+    msg = master.recv_match()
+    if not msg:
+        continue
+    if msg.get_type() == 'VFR_HUD':
+        data = str(msg)
+        try:
+            data = data.split(":")
+            depth = data[5].split(",")[0]
+        except:
+            print('')
+        print("Holding Depth At: ", depth)
