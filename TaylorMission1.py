@@ -112,7 +112,7 @@ print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
 time.sleep(5)
 
 
-set_target_depth(-1, vehicle)
+set_target_depth(-2, vehicle)
 print("TEST FINISHED")
 
 mode = 'ALT_HOLD'
