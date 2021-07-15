@@ -71,7 +71,7 @@ while True:
 
         print("Current Depth: ", depth)
         positive_depth = float(depth)
-        positive_depth = l*-1
+        positive_depth = positive_depth*-1
         if positive_depth > Z:
             time.sleep(0.1)
         else:
