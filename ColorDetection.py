@@ -5,13 +5,13 @@ cap = cv2.VideoCapture(0)
 
 for i in range(1000):
     ret, frame = cap.read()
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 80)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 60)
+    width = int(cap.get(3))
+    height = int(cap.get(4))
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    lower_orange = np.array([100, 100, 100])
-    upper_orange = np.array([255, 255, 255])
+    lower_orange = np.array([10, 110, 50])
+    upper_orange = np.array([10, 250, 250])
 
     mask = cv2.inRange(hsv, lower_orange, upper_orange)
 
