@@ -5,11 +5,6 @@ import argparse
 import math
 
 
-def connectSub():
-    vehicle = connect("udpout:", wait_ready=True)
-    return vehicle
-
-
 # Create the connection
 
 # Wait a heartbeat before sending commands
@@ -57,7 +52,7 @@ def manualControl(x, y, z):
         0)  # buttons
 
 
-master = mavutil.mavlink_connection('udpout:localhost:14550')
+master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 
 wait_conn()
 
@@ -92,4 +87,4 @@ def getDepth():
 
 
 while True:
-    print("DEPTH", depth)
+    print("DEPTH", getDepth())
