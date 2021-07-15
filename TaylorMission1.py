@@ -92,8 +92,7 @@ print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 
 # ARMING:
 vehicle = connectSub()
-vehicle.armed = False
-time.sleep(1)
+time.sleep(0.2)
 master.arducopter_arm()
 time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
@@ -109,7 +108,7 @@ master.mav.set_mode_send(
 
 
 print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
-time.sleep(5)
+time.sleep(0.5)
 
 
 set_target_depth(-2, vehicle)
