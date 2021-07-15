@@ -64,12 +64,12 @@ def getDepth():
 
 
 def set_target_depth(depth, vehicle):
-    current_depth = vehicle.location.global_relative_frame.alt
+    current_depth = getDepth()
     print(current_depth)
     if current_depth > depth:
         while current_depth > depth:
             manualControl(0, 0, -5)
-            current_depth = vehicle.location.global_relative_frame.alt
+            current_depth = getDepth()
             print("WE GOT HERE")
             print(current_depth)
             if (current_depth > 0.95 * depth):
@@ -77,7 +77,7 @@ def set_target_depth(depth, vehicle):
     else:
         while current_depth < depth:
             manualControl(0, 0, 5)
-            current_depth = vehicle.location.global_relative_frame.alt
+            current_depth = getDepth()
             print(current_depth)
             if (current_depth < 0.95 * depth):
                 break
