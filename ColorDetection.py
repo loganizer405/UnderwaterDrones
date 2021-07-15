@@ -3,7 +3,7 @@ import cv2
 
 cap = cv2.VideoCapture(0)
 
-for i in range(1000):
+while True:
     ret, frame = cap.read()
     width = int(cap.get(3))
     height = int(cap.get(4))
