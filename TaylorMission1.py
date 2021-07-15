@@ -3,7 +3,6 @@ import time
 from dronekit import connect, VehicleMode, LocationGlobalRelative, APIException
 import argparse
 import math
-import psutil
 
 
 def connectSub():
@@ -45,7 +44,7 @@ def manualControl(x, y, z):
 
 
 def getDepth():
-
+    depth = 0
     while True:
         msg = master.recv_match()
         if not msg:
@@ -73,11 +72,15 @@ def set_target_depth(depth, vehicle):
             current_depth = vehicle.location.global_relative_frame.alt
             print("WE GOT HERE")
             print(current_depth)
+            if (current_depth > 0.95 * depth):
+                break
     else:
         while current_depth < depth:
             manualControl(0, 0, 5)
             current_depth = vehicle.location.global_relative_frame.alt
             print(current_depth)
+            if (current_depth < 0.95 * depth):
+                break
 
 
 wait_conn()
@@ -109,10 +112,10 @@ print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
 time.sleep(5)
 
 
-set_target_depth(-0.25, vehicle)
+set_target_depth(-1, vehicle)
 print("TEST FINISHED")
 
-mode = 'POSHOLD'
+mode = 'ALT_HOLD'
 mode_id = master.mode_mapping()[mode]
 master.mav.set_mode_send(
     master.target_system,
