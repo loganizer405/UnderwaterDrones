@@ -44,6 +44,26 @@ def manualControl(x, y, z):
         0)  # buttons
 
 
+def getDepth():
+
+    while True:
+        msg = master.recv_match()
+        if not msg:
+            continue
+        if msg.get_type() == 'VFR_HUD':
+            data = str(msg)
+            try:
+                data = data.split(":")
+                depth = data[5].split(",")[0]
+            except:
+                print('')
+            print("Current Depth: ", depth)
+
+        if not depth == 0:
+            break
+    return depth
+
+
 def set_target_depth(depth, vehicle):
     current_depth = vehicle.location.global_relative_frame.alt
     print(current_depth)

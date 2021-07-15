@@ -70,5 +70,26 @@ master.arducopter_arm()
 time.sleep(2)
 print("<<<<<<ARMED>>>>>>")
 
-set_target_depth(-2)
-print("GOING DOWN!")
+
+def getDepth():
+
+    while True:
+        msg = master.recv_match()
+        if not msg:
+            continue
+        if msg.get_type() == 'VFR_HUD':
+            data = str(msg)
+            try:
+                data = data.split(":")
+                depth = data[5].split(",")[0]
+            except:
+                print('')
+            print("Current Depth: ", depth)
+
+        if not depth == 0:
+            break
+    return depth
+
+
+while True:
+    print("DEPTH", depth)
