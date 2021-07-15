@@ -5,11 +5,10 @@ import argparse
 import math
 
 
-'''
 def connectSub():
-    vehicle = connect("udpin:0.0.0.0:14550", wait_ready=True)
+    vehicle = connect("udpout:", wait_ready=True)
     return vehicle
-'''
+
 
 # Create the connection
 
@@ -34,7 +33,7 @@ def wait_conn():
 
 def set_target_depth(depth, boot_time):
 
-    master.mav.set_position_target_global_int_send(
+    master.mav.set_position_target_local_int_send(
         int(1e3 * (time.time() - boot_time)),  # ms since boot
         master.target_system, master.target_component,
         coordinate_frame=mavutil.mavlink.MAV_FRAME_GLOBAL_INT,
@@ -71,23 +70,5 @@ master.arducopter_arm()
 time.sleep(2)
 print("<<<<<<ARMED>>>>>>")
 
-
-for i in range(10000):
-    manualControl(0, 0, -5)
-    print("GOING DOWN!")
-
-
-mode = 'ALT_HOLD'
-mode_id = master.mode_mapping()[mode]
-
-
-print(list(master.mode_mapping()))
-
-
-master.mav.set_mode_send(
-    master.target_system,
-    mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
-    mode_id)
-
-print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
-time.sleep(5)
+set_target_depth(-2)
+print("GOING DOWN!")

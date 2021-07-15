@@ -75,7 +75,7 @@ while True:
     positive_depth = positive_depth*-1
     print("POSITIVE DEPTH: ", positive_depth, " WANTED DEPTH: ", Z)
     if positive_depth < Z:
-        time.sleep(1)
+        print("Not there")
     else:
         print("Finished")
         break
