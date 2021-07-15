@@ -70,9 +70,9 @@ def set_target_depth(depth, vehicle):
         while current_depth > depth:
             manualControl(0, 0, -5)
             current_depth = getDepth()
-            print("WE GOT HERE")
             print(current_depth)
-            if (current_depth > 0.95 * depth):
+            if (current_depth > 0.99 * depth):
+                print("DEPTH WANTED", depth, " CURRENT DEPTH:", getDepth())
                 break
     else:
         while current_depth < depth:
