@@ -69,14 +69,14 @@ while True:
         except:
             print('Depth not found')
 
-        print("Current Depth: ", depth)
-        positive_depth = float(depth)
-        positive_depth = l*-1
-        if positive_depth > Z:
-            time.sleep(0.1)
-        else:
-            print("Finished")
-            break
+    print("Current Depth: ", depth)
+    positive_depth = float(depth)
+    positive_depth = positive_depth*-1
+    if positive_depth > Z:
+        time.sleep(0.1)
+    else:
+        print("Finished")
+        break
 
 
 print("--------------Desired depth has been reached!-------------------")
