@@ -57,6 +57,7 @@ A = input()
 Z = float(A)
 
 move(Z)
+depth = 0
 while True:
     msg = master.recv_match()
     if not msg:
@@ -75,7 +76,7 @@ while True:
     positive_depth = positive_depth*-1
     print("POSITIVE DEPTH: ", positive_depth, " WANTED DEPTH: ", Z)
     if positive_depth < Z:
-        time.sleep(0.2)
+        time.sleep(1)
     else:
         print("Finished")
         break
