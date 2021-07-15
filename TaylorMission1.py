@@ -121,5 +121,3 @@ master.mav.set_mode_send(
     master.target_system,
     mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
     mode_id)
-
-vehicle.armed = False
