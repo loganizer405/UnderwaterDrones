@@ -70,8 +70,10 @@ while True:
             print('Depth not found')
 
     print("Current Depth: ", depth)
+
     positive_depth = float(depth)
     positive_depth = positive_depth*-1
+    print("POSITIVE DEPTH: ", positive_depth, " WANTED DEPTH: ", Z)
     if positive_depth < Z:
         time.sleep(0.1)
     else:
