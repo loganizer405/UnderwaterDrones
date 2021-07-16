@@ -18,12 +18,6 @@ while True:
 
     result = cv2.bitwise_and(frame, frame, mask=mask)
 
-    for x in range(0, result.shape[0]):
-        for y in range(0, result.shape[1]):
-            if not result[x, y][0] == 0:
-                print("COLOR DETECTED")
-                time.sleep(4)
-
     cv2.imshow('frame', result)
     if cv2.waitKey(1) == ord('q'):
         break
