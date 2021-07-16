@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import time
 
 cap = cv2.VideoCapture(0)
 
@@ -16,8 +17,12 @@ while True:
     mask = cv2.inRange(hsv, lower_orange, upper_orange)
 
     result = cv2.bitwise_and(frame, frame, mask=mask)
-    print(result[2])
-    print(result.shape)
+
+    for x in range(0, result.shape[0]):
+        for y in range(0, result.shape[1]):
+            if not result[x, y] == 0:
+                print("COLOR DETECTED")
+                time.sleep(4)
 
     if cv2.waitKey(1) == ord('q'):
         break
