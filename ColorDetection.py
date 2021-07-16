@@ -19,8 +19,6 @@ while True:
     print(result[2])
     print(result.shape)
 
-    cv2.imshow("frame", result)
-
     if cv2.waitKey(1) == ord('q'):
         break
 
