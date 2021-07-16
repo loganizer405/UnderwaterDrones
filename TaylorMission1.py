@@ -3,7 +3,6 @@ import time
 from dronekit import connect, VehicleMode, LocationGlobalRelative, APIException
 import argparse
 import math
-import psutil
 
 
 def connectSub():
@@ -14,7 +13,7 @@ def connectSub():
 # Create the connection
 
 # Wait a heartbeat before sending commands
-
+# master = mavutil.mavlink_connection(udpin:0.0.0.0:14550)
 master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 
 
@@ -44,20 +43,47 @@ def manualControl(x, y, z):
         0)  # buttons
 
 
-def set_target_depth(depth, vehicle):
-    current_depth = vehicle.location.global_relative_frame.alt
+def getDepth():
+    depth = 0
+    while True:
+        msg = master.recv_match()
+        if not msg:
+            continue
+        if msg.get_type() == 'VFR_HUD':
+            data = str(msg)
+            try:
+                data = data.split(":")
+                depth = data[5].split(",")[0]
+            except:
+                print('')
+            print("Current Depth: ", depth)
+
+        if not depth == 0:
+            break
+    return depth
+
+
+def set_target_depth(desired_depth):
+    current_depth = getDepth()
     print(current_depth)
-    if current_depth > depth:
-        while current_depth > depth:
+    if current_depth > desired_depth:
+        while True:
             manualControl(0, 0, -5)
-            current_depth = vehicle.location.global_relative_frame.alt
-            print("WE GOT HERE")
+            current_depth = getDepth()
             print(current_depth)
+            if (current_depth < 0.95 * desired_depth):
+                print("REACHED: DEPTH WANTED", desired_depth,
+                      " CURRENT DEPTH:", getDepth())
+                break
     else:
-        while current_depth < depth:
+        while True:
             manualControl(0, 0, 5)
-            current_depth = vehicle.location.global_relative_frame.alt
+            current_depth = getDepth()
             print(current_depth)
+            if (current_depth > 0.95 * desired_depth):
+                print("REACHED: DEPTH WANTED", desired_depth,
+                      " CURRENT DEPTH:", getDepth())
+                break
 
 
 wait_conn()
@@ -68,15 +94,10 @@ print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
 
 
 # ARMING:
-vehicle = connectSub()
-vehicle.armed = False
-time.sleep(1)
 master.arducopter_arm()
 time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
-
-print(list(master.mode_mapping()))
-
+# Setting the mode to manual
 mode = 'MANUAL'
 mode_id = master.mode_mapping()[mode]
 master.mav.set_mode_send(
@@ -86,17 +107,15 @@ master.mav.set_mode_send(
 
 
 print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
-time.sleep(5)
+time.sleep(0.2)
 
 
-set_target_depth(-0.25, vehicle)
+set_target_depth(-2)
 print("TEST FINISHED")
 
-mode = 'POSHOLD'
+mode = 'ALT_HOLD'
 mode_id = master.mode_mapping()[mode]
 master.mav.set_mode_send(
     master.target_system,
     mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
     mode_id)
-
-vehicle.armed = False

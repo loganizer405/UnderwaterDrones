@@ -1,25 +1,28 @@
 import numpy as np
 import cv2
+import time
 
 cap = cv2.VideoCapture(0)
 
-for i in range(1000):
+while True:
     ret, frame = cap.read()
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 80)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 60)
+    width = int(cap.get(3))
+    height = int(cap.get(4))
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    lower_orange = np.array([100, 100, 100])
-    upper_orange = np.array([255, 255, 255])
+    lower_orange = np.array([10, 110, 50])
+    upper_orange = np.array([10, 250, 250])
 
     mask = cv2.inRange(hsv, lower_orange, upper_orange)
 
     result = cv2.bitwise_and(frame, frame, mask=mask)
-    print(result[2])
-    print(result.shape)
 
-    cv2.imshow("frame", result)
+    for x in range(0, result.shape[0]):
+        for y in range(0, result.shape[1]):
+            if not result[x, y][0] == 0:
+                print("COLOR DETECTED")
+                time.sleep(4)
 
     if cv2.waitKey(1) == ord('q'):
         break
