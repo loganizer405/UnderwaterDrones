@@ -11,8 +11,8 @@ while True:
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    lower_orange = np.array([10, 110, 50])
-    upper_orange = np.array([10, 250, 250])
+    lower_orange = np.array([10, 100, 20])
+    upper_orange = np.array([24, 255, 255])
 
     mask = cv2.inRange(hsv, lower_orange, upper_orange)
 
@@ -24,6 +24,7 @@ while True:
                 print("COLOR DETECTED")
                 time.sleep(4)
 
+    cv2.imshow('frame', result)
     if cv2.waitKey(1) == ord('q'):
         break
 
