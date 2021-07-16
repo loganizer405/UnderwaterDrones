@@ -20,7 +20,7 @@ while True:
 
     for x in range(0, result.shape[0]):
         for y in range(0, result.shape[1]):
-            if not result[x, y] == 0:
+            if not result[x, y][0] == 0:
                 print("COLOR DETECTED")
                 time.sleep(4)
 
