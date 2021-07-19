@@ -11,8 +11,8 @@ while True:
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    lower_orange = np.array([10, 100, 20])
-    upper_orange = np.array([24, 255, 255])
+    lower_orange = np.array([0, 100, 175])
+    upper_orange = np.array([255, 255, 255])
 
     mask = cv2.inRange(hsv, lower_orange, upper_orange)
 
