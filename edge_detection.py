@@ -35,23 +35,5 @@ KNOWN_WIDTH = 11.0
 # the focal length
 image = cv2.imread("Ref_image2.png")
 marker = find_marker(image)
+print(marker)
 focalLength = (marker[1][0] * KNOWN_DISTANCE) / KNOWN_WIDTH
-
-
-for imagePath in sorted(paths.list_images("images")):
-    # load the image, find the marker in the image, then compute the
-    # distance to the marker from the camera
-    image = cv2.imread(imagePath)
-    marker = find_marker(image)
-    inches = distance_to_camera(KNOWN_WIDTH, focalLength, marker[1][0])
-    # draw a bounding box around the image and display it
-    box = cv2.cv.BoxPoints(
-        marker) if imutils.is_cv2() else cv2.boxPoints(marker)
-    box = np.int0(box)
-    cv2.drawContours(image, [box], -1, (0, 255, 0), 2)
-    cv2.putText(image, "%.2fft" % (inches / 12),
-                (image.shape[1] - 200, image.shape[0] -
-                 20), cv2.FONT_HERSHEY_SIMPLEX,
-                2.0, (0, 255, 0), 3)
-    cv2.imshow("image", image)
-    cv2.waitKey(0)
