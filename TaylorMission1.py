@@ -1,6 +1,5 @@
 from pymavlink import mavutil
 import time
-from dronekit import connect, VehicleMode, LocationGlobalRelative, APIException
 import argparse
 import math
 
