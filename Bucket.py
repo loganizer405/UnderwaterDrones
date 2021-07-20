@@ -187,7 +187,7 @@ print("<<<<<<ARMED>>>>>>")
 # Setting the mode to manual
 
 time.sleep(0.2)
-travel_in_x(1000, 15)
+travel_in_x(5000, 15)
 
 ro = 0
 
@@ -195,5 +195,5 @@ while True:
     ro += 0.01
     rotate(1000)
 
-    print("TIME: ", time)
+    print("TIME: ", ro)
     time.sleep(0.01)
