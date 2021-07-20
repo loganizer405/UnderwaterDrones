@@ -189,10 +189,11 @@ print("<<<<<<ARMED>>>>>>")
 time.sleep(0.2)
 travel_in_x(1000, 15)
 
-time = 0
+ro = 0
 
 while True:
-    time += 0.1
+    ro += 0.01
     rotate(1000)
-    time.sleep(0.1)
+
     print("TIME: ", time)
+    time.sleep(0.01)
