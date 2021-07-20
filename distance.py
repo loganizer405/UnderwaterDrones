@@ -7,10 +7,8 @@ import math
 # Create the connection
 
 # Wait a heartbeat before sending commands
-master = mavutil.mavlink_connection('udpin:0.0.0.0:14550')
-
-# Wait a heartbeat before sending commands
-#master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
+# master = mavutil.mavlink_connection(udpin:0.0.0.0:14550)
+master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 
 
 def wait_conn():
@@ -39,6 +37,16 @@ def manualControl(x, y, z):
         0)  # buttons
 
 
+def rotate(r):
+    master.mav.manual_control_send(
+        master.target_system,
+        0,  # x
+        0,  # y
+        0,  # z
+        r,  # r
+        0)  # buttons
+
+
 def getDepth():
     depth = 0
     while True:
@@ -63,7 +71,7 @@ def get_distance(array):
     get_velocity(array)
     time = len(array) * 0.1
     distance = 0
-    for i in range(len(array)):
+    for i in range(array):
         distance += array[i] * 0.1
 
     return distance
@@ -114,6 +122,34 @@ def set_target_depth(desired_depth):
                 break
 
 
+def travel_in_x(xThrottle, to):
+    mode = 'MANUAL'
+    mode_id = master.mode_mapping()[mode]
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+
+    print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
+    velocity_array = []
+    recorded_distance = get_distance(velocity_array)
+    while to > recorded_distance:
+        print("VELOCITY ARRAY:", velocity_array)
+        manualControl(xThrottle, 0, 0)
+        time.sleep(0.1)
+        recorded_distance = get_distance(velocity_array)
+        print("RECORDED DISTANCE: ", recorded_distance)
+
+    print("REACHED DESIRED DISTANCE: ", get_distance())
+
+    mode = 'ALT_HOLD'
+    mode_id = master.mode_mapping()[mode]
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+
+
 wait_conn()
 print("<<<<<<CONNECTION ESTABLISHED>>>>>>")
 boot_time = time.time()
@@ -125,22 +161,15 @@ master.arducopter_arm()
 time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 # Setting the mode to manual
-mode = 'MANUAL'
-mode_id = master.mode_mapping()[mode]
-master.mav.set_mode_send(
-    master.target_system,
-    mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
-    mode_id)
 
-
-print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
 time.sleep(0.2)
-velocity_array = []
-recorded_distance = get_distance(velocity_array)
-while 10 > recorded_distance:
-    manualControl(1000, 0, 0)
-    time.sleep(0.1)
-    recorded_distance = get_distance(velocity_array)
-    print("Recored Distance",recorded_distance)
 
-print("REACHED DESIRED DISTANCE: ")
+travel_in_x(1000, 6)
+
+time = 0
+
+while True:
+    time += 0.1
+    rotate(1000)
+    time.sleep(0.1)
+    print("TIME: ", time)
