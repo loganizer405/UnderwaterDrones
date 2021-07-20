@@ -71,7 +71,7 @@ def get_distance(array):
     get_velocity(array)
     time = len(array) * 0.1
     distance = 0
-    for i in range(array):
+    for i in range(len(array)):
         distance += array[i] * 0.1
 
     return distance
