@@ -135,11 +135,11 @@ master.mav.set_mode_send(
 
 print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
 time.sleep(0.2)
-
-recorded_distance = get_distance()
+velocity_array = []
+recorded_distance = get_distance(velocity_array)
 while 6 > recorded_distance:
     manualControl(5, 0, 0)
     time.sleep(0.1)
-    recorded_distance = get_distance()
+    recorded_distance = get_distance(velocity_array)
 
 print("REACHED DESIRED DISTANCE: ", get_distance())
