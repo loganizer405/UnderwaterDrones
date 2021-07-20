@@ -161,7 +161,6 @@ def travel_in_x(xThrottle, to):
     while to > recorded_distance:
         print("VELOCITY ARRAY:", velocity_array)
         manualControl(xThrottle, 0, 0)
-        time.sleep(0.1)
         recorded_distance = get_distance(velocity_array)
         print("RECORDED DISTANCE: ", recorded_distance)
 
