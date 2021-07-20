@@ -33,7 +33,7 @@ def manualControl(x, y, z):
         x,  # x
         y,  # y
         z,  # z
-        500,  # r
+        0,  # r
         0)  # buttons
 
 
@@ -184,4 +184,4 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 while True:
-    manualControl(1000, 0, 0)
+    manualControl(1000, 0, 500)
