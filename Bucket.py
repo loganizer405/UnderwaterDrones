@@ -188,8 +188,7 @@ print("<<<<<<ARMED>>>>>>")
 # Setting the mode to manual
 
 time.sleep(0.2)
-set_target_depth(-1)
-travel_in_x(1000, 15)
+travel_in_x(500, 15)
 
 time = 0
 
