@@ -162,6 +162,7 @@ def travel_in_x(xThrottle, to):
         print("VELOCITY ARRAY:", velocity_array)
         manualControl(xThrottle, 0, 500)
         recorded_distance = get_distance(velocity_array)
+        time.sleep(0.1)
         print("RECORDED DISTANCE: ", recorded_distance)
 
     print("REACHED DESIRED DISTANCE: ", get_distance(velocity_array))
@@ -185,5 +186,4 @@ master.arducopter_arm()
 time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
-for i in range(10000):
-    manualControl(1000, 0, 500)
+travel_in_x(5000, 5)
