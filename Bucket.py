@@ -124,6 +124,7 @@ def set_target_depth(desired_depth):
                     mode_id)
 
                 break
+            time.sleep(0.1)
     else:
         while True:
             manualControl(0, 0, 5)
@@ -140,6 +141,7 @@ def set_target_depth(desired_depth):
                     mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
                     mode_id)
                 break
+            time.sleep(1)
 
 
 def travel_in_x(xThrottle, to):
