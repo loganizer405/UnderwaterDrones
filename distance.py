@@ -58,6 +58,7 @@ def getDepth():
 
 
 def get_distance(array):
+    get_velocity(array)
     time = len(array) * 0.1
     distance = 0
     for i in range(array):
@@ -84,6 +85,7 @@ def get_velocity(array):
         if not velocity == 0:
             break
 
+    array.append(velocity)
     return velocity
 
 
@@ -115,3 +117,27 @@ print("<<<<<<CONNECTION ESTABLISHED>>>>>>")
 boot_time = time.time()
 master.wait_heartbeat()
 print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
+
+
+master.arducopter_arm()
+time.sleep(1)
+print("<<<<<<ARMED>>>>>>")
+# Setting the mode to manual
+mode = 'MANUAL'
+mode_id = master.mode_mapping()[mode]
+master.mav.set_mode_send(
+    master.target_system,
+    mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+    mode_id)
+
+
+print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
+time.sleep(0.2)
+
+recorded_distance = get_distance()
+while 6 > recorded_distance:
+    manualControl(5, 0, 0)
+    time.sleep(0.1)
+    recorded_distance = get_distance()
+
+print("REACHED DESIRED DISTANCE: ", get_distance())
