@@ -137,9 +137,10 @@ print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
 time.sleep(0.2)
 velocity_array = []
 recorded_distance = get_distance(velocity_array)
-while 6 > recorded_distance:
-    manualControl(5, 0, 0)
+while 10 > recorded_distance:
+    manualControl(1000, 0, 0)
     time.sleep(0.1)
     recorded_distance = get_distance(velocity_array)
+    print("Recored Distance",recorded_distance)
 
-print("REACHED DESIRED DISTANCE: ", get_distance())
+print("REACHED DESIRED DISTANCE: ")
