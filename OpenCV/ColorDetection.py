@@ -11,10 +11,10 @@ while True:
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    lower_orange = np.array([0, 125, 175]) #3, 215, 180 // 0, 100, 175 // 3, 226, 226 // 0, 209, 209
-    upper_orange = np.array([14, 255, 255]) #255, 255, 255 // 40, 255, 255
+    lower_color = np.array([0, 125, 175]) #3, 215, 180 // 0, 100, 175 // 3, 226, 226 // 0, 209, 209
+    upper_color = np.array([14, 255, 255]) #255, 255, 255 // 40, 255, 255
 
-    mask = cv2.inRange(hsv, lower_orange, upper_orange)
+    mask = cv2.inRange(hsv, lower_color, upper_color)
 
     result = cv2.bitwise_and(frame, frame, mask=mask)
 
