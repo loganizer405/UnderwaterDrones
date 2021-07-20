@@ -121,4 +121,3 @@ cap.release()
 
 # closing the the windows that are opened
 cv2.destroyAllWindows()
-
