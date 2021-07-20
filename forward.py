@@ -186,4 +186,4 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 for i in range(300):
-    manualControl(1000, 0, 0)
+    manualControl(0, 1000, 0)
