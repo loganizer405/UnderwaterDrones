@@ -33,7 +33,7 @@ def manualControl(x, y, z):
         x,  # x
         y,  # y
         z,  # z
-        0,  # r
+        500,  # r
         0)  # buttons
 
 
