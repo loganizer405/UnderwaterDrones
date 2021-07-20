@@ -165,7 +165,7 @@ def travel_in_x(xThrottle, to):
         recorded_distance = get_distance(velocity_array)
         print("RECORDED DISTANCE: ", recorded_distance)
 
-    print("REACHED DESIRED DISTANCE: ", get_distance())
+    print("REACHED DESIRED DISTANCE: ", get_distance(velocity_array))
 
     mode = 'ALT_HOLD'
     mode_id = master.mode_mapping()[mode]
@@ -188,7 +188,7 @@ print("<<<<<<ARMED>>>>>>")
 # Setting the mode to manual
 
 time.sleep(0.2)
-travel_in_x(500, 15)
+travel_in_x(1000, 15)
 
 time = 0
 
