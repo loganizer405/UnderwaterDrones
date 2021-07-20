@@ -186,7 +186,7 @@ print("<<<<<<ARMED>>>>>>")
 
 time.sleep(0.2)
 set_target_depth(-1)
-travel_in_x(1000, 6)
+travel_in_x(1000, 15)
 
 time = 0
 
