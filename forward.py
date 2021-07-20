@@ -69,10 +69,9 @@ def getDepth():
 
 def get_distance(array):
     get_velocity(array)
-    time = len(array) * 0.1
     distance = 0
     for i in range(len(array)):
-        distance += array[i] * 0.1
+        distance += array[i] * 0.01
 
     return distance
 
@@ -157,13 +156,12 @@ def travel_in_x(xThrottle, to):
 
     print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
     velocity_array = []
-    recorded_distance = get_distance(velocity_array)
-    while to > recorded_distance:
+
+    while to > get_distance(velocity_array):
         print("VELOCITY ARRAY:", velocity_array)
         manualControl(xThrottle, 0, 500)
-        recorded_distance = get_distance(velocity_array)
-        time.sleep(0.1)
-        print("RECORDED DISTANCE: ", recorded_distance)
+        time.sleep(0.01)
+        print("RECORDED DISTANCE: ", get_distance(velocity_array))
 
     print("REACHED DESIRED DISTANCE: ", get_distance(velocity_array))
 
