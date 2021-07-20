@@ -122,7 +122,7 @@ def set_target_depth(desired_depth):
                     master.target_system,
                     mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
                     mode_id)
-
+                print('depth reached')
                 break
             time.sleep(0.1)
     else:
