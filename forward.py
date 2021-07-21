@@ -28,6 +28,13 @@ def wait_conn():
 
 
 def manualControl(x, y, z):
+    mode = 'MANUAL'
+    mode_id = master.mode_mapping()[mode]
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+
     master.mav.manual_control_send(
         master.target_system,
         x,  # x
@@ -184,4 +191,4 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 while True:
-    manualControl(1000, 0, 500)
+    manualControl(1000, 0, 0)
