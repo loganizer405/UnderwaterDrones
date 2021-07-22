@@ -117,7 +117,7 @@ def set_target_depth(desired_depth):
 
     if current_depth > desired_depth:
         running = True
-        while running:
+        for i in range(100000):
             manualControl(0, 0, -5)
             current_depth = getDepth()
             print("Current depth", current_depth)
@@ -135,7 +135,7 @@ def set_target_depth(desired_depth):
                 break
             time.sleep(0.1)
     if current_depth < desired_depth:
-        while True:
+        for i in range(1000000):
             manualControl(0, 0, 5)
             current_depth = getDepth()
             print(current_depth)
@@ -191,5 +191,4 @@ master.arducopter_arm()
 time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
-for i in range(30000):
-    manualControl(10000, 0, 0)
+travel_in_x(10)
