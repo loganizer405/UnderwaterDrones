@@ -98,7 +98,7 @@ def travel_in_x(xThrottle, to):
 
     print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
     velocity_array = []
-    for i in range(10000000):
+    for i in range(10000):
         manualControl(xThrottle, 0, 500)
         print("RECORDED DISTANCE: ", get_distance(velocity_array))
         if to < get_distance(velocity_array):
