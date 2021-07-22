@@ -191,4 +191,4 @@ master.arducopter_arm()
 time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
-travel_in_x(10)
+travel_in_x(500, 10)
