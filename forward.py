@@ -192,4 +192,4 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 while True:
-    manualControl(1000, 0, 500)
+    manualControl(10000, 0, 0)
