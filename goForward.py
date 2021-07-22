@@ -55,5 +55,5 @@ master.arducopter_arm()
 time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
-while True:
+for in range(30000):
     manualControl(10000, 0, 0)
