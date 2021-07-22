@@ -56,7 +56,7 @@ A = input()
 
 Z = float(A)
 move(Z)
-depth=0
+depth = 0
 depth = 0
 while True:
     msg = master.recv_match()
