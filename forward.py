@@ -113,7 +113,8 @@ def set_target_depth(desired_depth):
         mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
         mode_id)
     current_depth = getDepth()
-    print(current_depth)
+    print("INTITIAL DEPTH: ", current_depth)
+
     if current_depth > desired_depth:
         running = True
         while running:
@@ -133,12 +134,12 @@ def set_target_depth(desired_depth):
                 running = False
                 break
             time.sleep(0.1)
-    else:
+    if current_depth < desired_depth:
         while True:
             manualControl(0, 0, 5)
             current_depth = getDepth()
             print(current_depth)
-            if (current_depth > 0.95 * desired_depth):
+            if (current_depth >= 0.95 * desired_depth):
                 print("REACHED: DEPTH WANTED", desired_depth,
                       " CURRENT DEPTH:", getDepth())
 
@@ -191,4 +192,4 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 while True:
-    manualControl(1000, 0, 0)
+    manualControl(1000, 0, 500)

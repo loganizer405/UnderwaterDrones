@@ -64,12 +64,12 @@ def getDepth():
 
 
 def set_target_depth(desired_depth):
-    current_depth = getDepth()
+    current_depth = float(getDepth())
     print(current_depth)
     if current_depth > desired_depth:
         while True:
             manualControl(0, 0, -5)
-            current_depth = getDepth()
+            current_depth = float(getDepth())
             print(current_depth)
             if (current_depth < 0.95 * desired_depth):
                 print("REACHED: DEPTH WANTED", desired_depth,
@@ -78,7 +78,7 @@ def set_target_depth(desired_depth):
     else:
         while True:
             manualControl(0, 0, 5)
-            current_depth = getDepth()
+            current_depth = float(getDepth())
             print(current_depth)
             if (current_depth > 0.95 * desired_depth):
                 print("REACHED: DEPTH WANTED", desired_depth,

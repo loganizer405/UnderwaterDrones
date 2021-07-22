@@ -29,6 +29,8 @@ def Focal_Length_Finder(measured_distance, real_width, width_in_rf_image):
     return focal_length
 
 # distance estimation function
+
+
 def Distance_finder(Focal_Length, real_face_width, face_width_in_frame):
 
     distance = (real_face_width * Focal_Length)/face_width_in_frame
@@ -44,11 +46,13 @@ def face_data(image):
     edged = cv2.Canny(gray, 35, 125)
     # find the contours in the edged image and keep the largest one;
     # we'll assume that this is our piece of paper in the image
-    cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST,
+                            cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
-    c= max(cnts, key = cv2.contourArea)
-    marker=cv2.minAreaRect(c)
-    box = cv2.cv.BoxPoints(marker) if imutils.is_cv2() else cv2.boxPoints(marker)
+    c = max(cnts, key=cv2.contourArea)
+    marker = cv2.minAreaRect(c)
+    box = cv2.cv.BoxPoints(
+        marker) if imutils.is_cv2() else cv2.boxPoints(marker)
     box = np.int0(box)
     cv2.drawContours(image, [box], -1, (0, 255, 0), 2)
     return marker[1][0]
@@ -57,7 +61,7 @@ def face_data(image):
 
 
 # reading reference_image from directory
-ref_image = cv2.imread("bucket.png")
+ref_image = cv2.imread('bucket.png')
 
 # find the face width(pixels) in the reference_image
 ref_image_face_width = face_data(ref_image)
@@ -92,7 +96,7 @@ while True:
     # check if the face is zero then not
     # find the distance
     if face_width_in_frame != 0:
-    
+
         # finding the distance by calling function
         # Distance distnace finder function need
         # these arguments the Focal_Length,
@@ -108,7 +112,7 @@ while True:
         # Drawing Text on the screen
         cv2.putText(
             frame, f"Distance to bucket: {round(Distance,2)} CM", (30, 35),
-        fonts, 0.6, GREEN, 2)
+            fonts, 0.6, GREEN, 2)
     # show the frame on the screen
     cv2.imshow("frame", frame)
 
