@@ -28,29 +28,12 @@ def wait_conn():
 
 
 def manualControl(x, y, z):
-    mode = 'MANUAL'
-    mode_id = master.mode_mapping()[mode]
-    master.mav.set_mode_send(
-        master.target_system,
-        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
-        mode_id)
-
     master.mav.manual_control_send(
         master.target_system,
         x,  # x
         y,  # y
         z,  # z
         0,  # r
-        0)  # buttons
-
-
-def rotate(r):
-    master.mav.manual_control_send(
-        master.target_system,
-        0,  # x
-        0,  # y
-        0,  # z
-        r,  # r
         0)  # buttons
 
 
@@ -103,54 +86,6 @@ def get_velocity(array):
 
     array.append(velocity)
     return velocity
-
-
-def set_target_depth(desired_depth):
-    mode = 'MANUAL'
-    mode_id = master.mode_mapping()[mode]
-    master.mav.set_mode_send(
-        master.target_system,
-        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
-        mode_id)
-    current_depth = getDepth()
-    print("INTITIAL DEPTH: ", current_depth)
-
-    if current_depth > desired_depth:
-        running = True
-        for i in range(100000):
-            manualControl(0, 0, -5)
-            current_depth = getDepth()
-            print("Current depth", current_depth)
-            if (current_depth < 0.95 * desired_depth):
-                print("REACHED: DEPTH WANTED", desired_depth,
-                      " CURRENT DEPTH:", getDepth())
-                mode = 'ALT_HOLD'
-                mode_id = master.mode_mapping()[mode]
-                master.mav.set_mode_send(
-                    master.target_system,
-                    mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
-                    mode_id)
-                print('depth reached')
-                running = False
-                break
-            time.sleep(0.1)
-    if current_depth < desired_depth:
-        for i in range(1000000):
-            manualControl(0, 0, 5)
-            current_depth = getDepth()
-            print(current_depth)
-            if (current_depth >= 0.95 * desired_depth):
-                print("REACHED: DEPTH WANTED", desired_depth,
-                      " CURRENT DEPTH:", getDepth())
-
-                mode = 'ALT_HOLD'
-                mode_id = master.mode_mapping()[mode]
-                master.mav.set_mode_send(
-                    master.target_system,
-                    mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
-                    mode_id)
-                break
-            time.sleep(1)
 
 
 def travel_in_x(xThrottle, to):
