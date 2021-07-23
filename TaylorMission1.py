@@ -77,7 +77,7 @@ def set_target_depth(desired_depth):
                 break
     else:
         while True:
-            manualControl(0, 0, 5)
+            manualControl(0, 0, 500)
             current_depth = float(getDepth())
             print(current_depth)
             if (current_depth > 0.95 * desired_depth):
