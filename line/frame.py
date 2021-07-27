@@ -1,12 +1,25 @@
 import cv2
+import math
 import numpy as np
 
 #GAUSSIAN
 KERNEL_SIZE = 5
 
 #CANNY
-LOW_THRESHOLD = 50
-HIGH_THRESHOLD = 150
+LOW_THRESHOLD = 20
+HIGH_THRESHOLD = 100
+
+
+def find_angle(x1,y1,x2,y2):
+     a = x2 - x1
+     b = y2 - y1 
+     return angle_between_vectors(1,0,a,b)
+
+def angle_between_vectors(x1,y1,x2,y2):
+    return math.acos((x1 * x2 + y1 * y2) / ((math.sqrt(math.pow(x1,2) + math.pow(y1,2))) * (math.sqrt(math.pow(x2,2) + math.pow(y2,2)))))
+
+
+
 
 def frame_analyze(frame):
     #I FILTER COLOR
@@ -15,43 +28,37 @@ def frame_analyze(frame):
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     
     #smooth image with a gaussian blur
-    '''
-    in general computes a weighted average of each pixel and neighbors
-    used to reduce noise and smooth the image allowing an image to be defined by its prominent
-    features
-
-    The standard deviation is used in the discrete gaussian function that is bounded by the 
-    kernel size. The matrix of the approximation is then convolved with each pixel to generate 
-    a blurred image.
-
-    explaination: https://homepages.inf.ed.ac.uk/rbf/HIPR2/gsmooth.htm
-    ''' 
 
     # parameter 1: image source parameter 
     # parameter 2: kernel dimmensions as a 2d size 
     # parameter 3: kernel standard deviation in the x direction
-    blur_frame = cv.GaussianBlur(gray_frame, (KERNEL_SIZE,KERNEL_SIZE), 0)
+    blur_frame = cv2.GaussianBlur(gray_frame, (KERNEL_SIZE,KERNEL_SIZE), 0)
 
     #II DETECT EDGES
-   
-    '''
-    To have an image composed soley of edges will use the Canny edge detection method.
-    Multistepped process
-
-    1: gaussian filter is applied
-       
-        already been used so this can be left out  
-        used again
-
-    2: Intensity gradients are found using a Sobel kernel, 2 convolutional 3x3 kernels one finding horizontal gradients and the other find the vertical ones.
-    '''
     edged_frame = cv2.Canny(blur_frame, LOW_THRESHOLD, HIGH_THRESHOLD)
 
 
     #III INTERPRET THE LINE
 
+    # hough line transform
+    rho = 1
+    theta = np.pi
+    threshold = 15
+    min_line_length = 50
+    max_line_gap = 20
+    line_frame = np.copy(frame)
+    lines = cv2.HoughLinesP(edged_frame, rho, theta, threshold, np.array([]),
+            min_line_length, max_line_gap)
 
-    #IV DETERMINE MESSAGE TO SEND TO MAVLINK
+    
+    if len(lines) == 0:
+        return
+    print("new frame")
+    for line in lines:
+        for x1, y1, x2, y2 in line:
+            angle = find_angle(x1,y1,x2,y2)           
+            print(angle * (math.pi/180))
+
     
 
 
