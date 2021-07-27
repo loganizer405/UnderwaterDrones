@@ -98,7 +98,7 @@ while True:
 
     res = cv2.bitwise_and(frame, frame, mask= opening)             ##Apply mask on original image
 
-    contours, hierarchy = cv2.findContours(opening, cv2.RETR_TREE,      ##Find contours
+    contours, hierarchy, _ = cv2.findContours(opening, cv2.RETR_LIST,      ##Find contours
                                            cv2.CHAIN_APPROX_NONE)
 
     if len(contours) != 0:
