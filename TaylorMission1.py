@@ -12,8 +12,9 @@ def connectSub():
 # Create the connection
 
 # Wait a heartbeat before sending commands
-# master = mavutil.mavlink_connection(udpin:0.0.0.0:14550)
-master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
+master = mavutil.mavlink_connection("udpin:0.0.0.0:14550")
+
+#master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 
 
 def wait_conn():
@@ -76,7 +77,7 @@ def set_target_depth(desired_depth):
                 break
     else:
         while True:
-            manualControl(0, 0, 5)
+            manualControl(0, 0, 500)
             current_depth = float(getDepth())
             print(current_depth)
             if (current_depth > 0.95 * desired_depth):
