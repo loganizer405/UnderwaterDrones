@@ -228,7 +228,6 @@ print(Focal_length_found)
 while True:
 
     # reading the frame from camera
-    _, frame = cap.read()
     frame2 = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)         ##BGR to HSV
     lb = np.array([153, 119, 212])
     ub = np.array([255, 255, 255])
@@ -291,6 +290,7 @@ while True:
         break
 
 # closing the camera
+
 cap.release()
 
 # closing the the windows that are opened
