@@ -189,3 +189,6 @@ print("<<<<<<ARMED>>>>>>")
 
 time.sleep(0.2)
 travel_in_x(5000, 5)
+
+
+master.arducopter_disarm()
