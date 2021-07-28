@@ -7,7 +7,7 @@ import numpy as np
 
 # distance from camera to object(face) measured
 # centimeter
-Known_distance = 40
+Known_distance = 122
 
 # width of face in the real world or Object Plane
 # centimeter
@@ -19,6 +19,10 @@ RED = (0, 0, 255)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BLUE = (255, 0, 0)
+
+#lower and upper bound colors
+lower = np.array([0, 72, 160])
+upper = np.array([82, 180, 255])
 
 # defining the fonts
 fonts = cv2.FONT_HERSHEY_SIMPLEX
@@ -43,8 +47,8 @@ def Distance_finder(Focal_Length, real_face_width, face_width_in_frame):
     # return the face width in pixel
 def filter(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    lb = np.array([10, 100, 20])
-    ub = np.array([25, 255, 255])
+    lb = lower
+    ub = upper
     mask = cv2.inRange(gray, lb, ub)   
     edged = cv2.morphologyEx(mask, cv2.MORPH_OPEN, Kernal) 
         # find the contours in the edged image and keep the largest one;
@@ -88,8 +92,8 @@ while True:
     # reading the frame from camera
     _, frame = cap.read()
     frame2 = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)         ##BGR to HSV
-    lb = np.array([10, 100, 20])
-    ub = np.array([25, 255, 255])
+    lb = lower
+    ub = upper
 
     mask = cv2.inRange(frame2, lb, ub)                      ##Create Mask
 
