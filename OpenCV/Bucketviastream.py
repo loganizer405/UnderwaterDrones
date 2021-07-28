@@ -145,6 +145,8 @@ if __name__ == '__main__':
 
 
 cap = video.frame()
+
+cv2.imshow("frame", cap)
        
         
 
@@ -226,7 +228,7 @@ print(Focal_length_found)
 # looping through frame, incoming from
 # camera/video
 while True:
-
+    frame=cap
     # reading the frame from camera
     frame2 = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)         ##BGR to HSV
     lb = np.array([153, 119, 212])
