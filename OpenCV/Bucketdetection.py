@@ -43,8 +43,8 @@ def Distance_finder(Focal_Length, real_face_width, face_width_in_frame):
     # return the face width in pixel
 def filter(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    lb = np.array([153, 119, 212])
-    ub = np.array([255, 255, 255])
+    lb = np.array([10, 100, 20])
+    ub = np.array([25, 255, 255])
     mask = cv2.inRange(gray, lb, ub)   
     edged = cv2.morphologyEx(mask, cv2.MORPH_OPEN, Kernal) 
         # find the contours in the edged image and keep the largest one;
@@ -88,8 +88,8 @@ while True:
     # reading the frame from camera
     _, frame = cap.read()
     frame2 = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)         ##BGR to HSV
-    lb = np.array([153, 119, 212])
-    ub = np.array([255, 255, 255])
+    lb = np.array([10, 100, 20])
+    ub = np.array([25, 255, 255])
 
     mask = cv2.inRange(frame2, lb, ub)                      ##Create Mask
 
@@ -98,8 +98,8 @@ while True:
 
     res = cv2.bitwise_and(frame, frame, mask= opening)             ##Apply mask on original image
 
-    contours, hierarchy, _ = cv2.findContours(opening, cv2.RETR_LIST,      ##Find contours
-                                           cv2.CHAIN_APPROX_NONE)
+    contours, hierarchy = cv2.findContours(opening, cv2.RETR_LIST,      ##Find contours
+                                           cv2.CHAIN_APPROX_NONE)[-2:]
 
     if len(contours) != 0:
 
@@ -129,11 +129,11 @@ while True:
             fonts, 0.6, RED, 2)
 
             if Distance<=50: 
-                cv2.line(frame, (1000, 30), (1220, 30), RED, 32)
-                cv2.line(frame, (1000, 30), (1220, 30), WHITE, 28)
+                cv2.line(frame, (450, 30), (600, 30), RED, 32)
+                cv2.line(frame, (450, 30), (600, 30), WHITE, 28)
                 cv2.putText(
-                frame, f"ROV COLLISION ALLERT", (1000, 35),
-            fonts, 0.6, RED, 2)
+                frame, f"ROV COLLISION ALLERT", (450, 35),
+            fonts, 0.5, RED, 2)
                 
         # show the frame on the screen
     else:
