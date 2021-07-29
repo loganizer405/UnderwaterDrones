@@ -151,7 +151,7 @@ while True:
 
     contours, hierarchy = cv2.findContours(opening, cv2.RETR_LIST,      ##Find contours
                                            cv2.CHAIN_APPROX_NONE)[-2:]
-
+    manualControl(0,750,0)
     if len(contours) != 0:
 
     # calling face_data function to find
@@ -187,6 +187,10 @@ while True:
             fonts, 0.5, RED, 2)
                 master.arducopter_disarm()
                 print(">>>>>ROV DISARMED<<<<<<<")
+                master.arducopter_arm()
+                manualControl(750,0,0)
+
+        manualControl(0,750,0)
                 
         # show the frame on the screen
     else:
@@ -196,6 +200,7 @@ while True:
                 frame, f"Bucket not detected", (30, 35),
             fonts, 0.6, GREEN, 2)
     cv2.imshow("frame", frame)
+    manualControl(0,750,0)
 
     # quit the program if you press 'q' on keyboard
     if cv2.waitKey(1) == ord("q"):
