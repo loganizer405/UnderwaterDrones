@@ -167,6 +167,7 @@ def travel_in_x(xThrottle, to):
 
         final_time = end_time-initial_time
         print("FINAL TIME: ", final_time)
+
         print("RECORDED DISTANCE: ", get_distance(velocity_array, final_time))
         if to < get_distance(velocity_array, final_time):
             break
@@ -194,7 +195,7 @@ print("<<<<<<ARMED>>>>>>")
 # Setting the mode to manual
 
 
-travel_in_x(1000, 15)
+travel_in_x(1000, 30)
 
 
 master.arducopter_disarm()
