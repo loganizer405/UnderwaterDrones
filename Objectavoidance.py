@@ -34,7 +34,7 @@ master.arducopter_arm()
 time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 # Setting the mode to manual
-mode = 'MANUAL'
+mode = 'ALT_HOLD'
 mode_id = master.mode_mapping()[mode]
 master.mav.set_mode_send(
     master.target_system,
