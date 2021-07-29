@@ -42,16 +42,7 @@ master.mav.set_mode_send(
     mode_id)
 
 
-print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
-time.sleep(0.2)
-def manualControl(x, y, z):
-    master.mav.manual_control_send(
-        master.target_system,
-        x,  # x
-        y,  # y
-        z,  # z
-        0,  # r
-        0)  # buttons
+ # buttons
 # distance from camera to object(face) measured
 # centimeter
 Known_distance = 122
@@ -136,7 +127,6 @@ cap = cv2.VideoCapture(0)
 # camera/video
 while True:
 
-    manualControl(1000,0,500)
     _, frame = cap.read()
     frame2 = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)         ##BGR to HSV
     lb = lower
@@ -145,13 +135,11 @@ while True:
     mask = cv2.inRange(frame2, lb, ub)                      ##Create Mask
 
     opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, Kernal)        ##Morphology
-    manualControl(1000,0,0)
 
     res = cv2.bitwise_and(frame, frame, mask= opening)             ##Apply mask on original image
 
     contours, hierarchy = cv2.findContours(opening, cv2.RETR_LIST,      ##Find contours
                                            cv2.CHAIN_APPROX_NONE)[-2:]
-    manualControl(1000,0,500)
     if len(contours) != 0:
 
     # calling face_data function to find
@@ -178,7 +166,6 @@ while True:
             cv2.putText(
                 frame, f"Distance to bucket: {round(Distance,2)} CM", (30, 35),
             fonts, 0.6, RED, 2)
-            manualControl(1000,0,500)
             if Distance<=50: 
                 cv2.line(frame, (450, 30), (600, 30), RED, 32)
                 cv2.line(frame, (450, 30), (600, 30), WHITE, 28)
@@ -187,10 +174,7 @@ while True:
             fonts, 0.5, RED, 2)
                 master.arducopter_disarm()
                 print(">>>>>ROV DISARMED<<<<<<<")
-                master.arducopter_arm()
-                manualControl(0,1000,500)
 
-        manualControl(1000,0,500)
                 
         # show the frame on the screen
     else:
@@ -200,7 +184,6 @@ while True:
                 frame, f"Bucket not detected", (30, 35),
             fonts, 0.6, GREEN, 2)
     cv2.imshow("frame", frame)
-    manualControl(1000,0,500)
 
     # quit the program if you press 'q' on keyboard
     if cv2.waitKey(1) == ord("q"):
