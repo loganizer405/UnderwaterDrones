@@ -25,7 +25,7 @@ def wait_conn():
 
 def manualControl(x, y, z):
   
-    for i in range(150):
+    for i in range(200):
         master.mav.manual_control_send(
             master.target_system,
             x,  # x
@@ -201,7 +201,7 @@ while True:
     # quit the program if you press 'q' on keyboard
     if cv2.waitKey(1) == ord("q"):
         break
-
+    manualControl(1000,0,500)
 # closing the camera
 cap.release()
 
