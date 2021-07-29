@@ -189,7 +189,7 @@ print("<<<<<<ARMED>>>>>>")
 # Setting the mode to manual
 
 
-travel_in_x(1000, 5a)
+travel_in_x(1000, 5)
 
 
 master.arducopter_disarm()
