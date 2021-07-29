@@ -163,7 +163,7 @@ def travel_in_x(xThrottle, to):
             manualControl(xThrottle, 0, 500)
 
         print("RECORDED DISTANCE: ", get_distance(velocity_array))
-        if to < recorded_distance:
+        if to < get_distance(velocity_array):
             break
 
     print("REACHED DESIRED DISTANCE: ", get_distance(velocity_array))
