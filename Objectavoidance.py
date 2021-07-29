@@ -45,7 +45,7 @@ master.mav.set_mode_send(
  # buttons
 # distance from camera to object(face) measured
 # centimeter
-Known_distance = 122
+Known_distance = 150
 
 # width of face in the real world or Object Plane
 # centimeter
@@ -166,7 +166,7 @@ while True:
             cv2.putText(
                 frame, f"Distance to bucket: {round(Distance,2)} CM", (30, 35),
             fonts, 0.6, RED, 2)
-            if Distance<=50: 
+            if Distance<=150: 
                 cv2.line(frame, (450, 30), (600, 30), RED, 32)
                 cv2.line(frame, (450, 30), (600, 30), WHITE, 28)
                 cv2.putText(
