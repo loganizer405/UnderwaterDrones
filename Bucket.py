@@ -148,7 +148,7 @@ def set_target_depth(desired_depth):
 
 
 def travel_in_x(xThrottle, to):
-    mode = 'ALT_HOLD'
+    mode = 'MANUAL'
     mode_id = master.mode_mapping()[mode]
     master.mav.set_mode_send(
         master.target_system,
