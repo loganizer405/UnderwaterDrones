@@ -160,7 +160,7 @@ def travel_in_x(xThrottle, to):
     recorded_distance = get_distance(velocity_array)
     for i in range(100000):
         for j in range(100):
-            manualControl(xThrottle, 0, 0)
+            manualControl(xThrottle, 0, 500)
 
         print("RECORDED DISTANCE: ", get_distance(velocity_array))
         if to < recorded_distance:
