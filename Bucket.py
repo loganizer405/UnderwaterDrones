@@ -72,7 +72,7 @@ def get_distance(array):
     time = len(array) * 0.1
     distance = 0
     for i in range(len(array)):
-        distance += array[i] * 0.01
+        distance += array[i] * 0.07
 
     return distance
 
@@ -189,7 +189,7 @@ print("<<<<<<ARMED>>>>>>")
 # Setting the mode to manual
 
 
-travel_in_x(1000, 5a)
+travel_in_x(1000, 5)
 
 
 master.arducopter_disarm()
