@@ -59,8 +59,8 @@ BLACK = (0, 0, 0)
 BLUE = (255, 0, 0)
 
 #lower and upper bound colors
-lower = np.array([0, 72, 160])
-upper = np.array([82, 180, 255])
+lower = np.array([0, 114, 114])
+upper = np.array([28, 247, 255])
 
 # defining the fonts
 fonts = cv2.FONT_HERSHEY_SIMPLEX
