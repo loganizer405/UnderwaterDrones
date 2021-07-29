@@ -24,6 +24,7 @@ def wait_conn():
 
 
 def manualControl(x, y, z):
+  
     for i in range(100):
         master.mav.manual_control_send(
             master.target_system,
@@ -32,7 +33,6 @@ def manualControl(x, y, z):
             z,  # z
             0,  # r
             0)  # buttons
-
 
 wait_conn()
 print("<<<<<<CONNECTION ESTABLISHED>>>>>>")
@@ -53,7 +53,8 @@ master.mav.set_mode_send(
     mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
     mode_id)
 
-# buttons
+
+ # buttons
 # distance from camera to object(face) measured
 # centimeter
 Known_distance = 150
@@ -69,7 +70,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BLUE = (255, 0, 0)
 
-# lower and upper bound colors
+#lower and upper bound colors
 lower = np.array([0, 114, 114])
 upper = np.array([28, 247, 255])
 
@@ -86,8 +87,6 @@ def Focal_Length_Finder(measured_distance, real_width, width_in_rf_image):
     return focal_length
 
 # distance estimation function
-
-
 def Distance_finder(Focal_Length, real_face_width, face_width_in_frame):
 
     distance = (real_face_width * Focal_Length)/face_width_in_frame
@@ -96,27 +95,23 @@ def Distance_finder(Focal_Length, real_face_width, face_width_in_frame):
     return distance
 
     # return the face width in pixel
-
-
 def filter(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     lb = lower
     ub = upper
-    mask = cv2.inRange(gray, lb, ub)
-    edged = cv2.morphologyEx(mask, cv2.MORPH_OPEN, Kernal)
-    # find the contours in the edged image and keep the largest one;
-    # we'll assume that this is our piece of paper in the image
+    mask = cv2.inRange(gray, lb, ub)   
+    edged = cv2.morphologyEx(mask, cv2.MORPH_OPEN, Kernal) 
+        # find the contours in the edged image and keep the largest one;
+        # we'll assume that this is our piece of paper in the image
     cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
     cnts = imutils.grab_contours(cnts)
-    c = max(cnts, key=cv2.contourArea)
-    marker = cv2.minAreaRect(c)
-    box = cv2.cv.BoxPoints(
-        marker) if imutils.is_cv2() else cv2.boxPoints(marker)
+    c= max(cnts, key = cv2.contourArea)
+    marker=cv2.minAreaRect(c)
+    box = cv2.cv.BoxPoints(marker) if imutils.is_cv2() else cv2.boxPoints(marker)
     box = np.int0(box)
     cv2.drawContours(image, [box], -1, (0, 255, 0), 2)
 
     return marker[1][0]
-
 
 # reading reference_image from directory
 ref_image = cv2.imread("OpenCV/bucket.jpg")
@@ -145,29 +140,29 @@ cap = cv2.VideoCapture(0)
 while True:
 
     _, frame = cap.read()
-    frame2 = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)  # BGR to HSV
+    frame2 = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)         ##BGR to HSV
     lb = lower
     ub = upper
 
-    mask = cv2.inRange(frame2, lb, ub)  # Create Mask
+    mask = cv2.inRange(frame2, lb, ub)                      ##Create Mask
 
-    opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, Kernal)  # Morphology
+    opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, Kernal)        ##Morphology
 
-    # Apply mask on original image
-    res = cv2.bitwise_and(frame, frame, mask=opening)
+    res = cv2.bitwise_and(frame, frame, mask= opening)             ##Apply mask on original image
 
-    contours, hierarchy = cv2.findContours(opening, cv2.RETR_LIST,  # Find contours
+    contours, hierarchy = cv2.findContours(opening, cv2.RETR_LIST,      ##Find contours
                                            cv2.CHAIN_APPROX_NONE)[-2:]
+    manualControl(1000,0,500)
     if len(contours) != 0:
 
-        # calling face_data function to find
-        # the width of face(pixels) in the frame
+    # calling face_data function to find
+    # the width of face(pixels) in the frame
         face_width_in_frame = filter(frame)
 
         # check if the face is zero then not
         # find the distance
         if face_width_in_frame != 0:
-
+        
             # finding the distance by calling function
             # Distance distnace finder function need
             # these arguments the Focal_Length,
@@ -183,27 +178,23 @@ while True:
             # Drawing Text on the screen
             cv2.putText(
                 frame, f"Distance to bucket: {round(Distance,2)} CM", (30, 35),
-<<<<<<< HEAD
             fonts, 0.6, RED, 2)
             if Distance<=150: 
-=======
-                fonts, 0.6, RED, 2)
-            if Distance <= 50:
->>>>>>> ab13328f5f229b6f313efe6a6e2028f82b55e6a2
                 cv2.line(frame, (450, 30), (600, 30), RED, 32)
                 cv2.line(frame, (450, 30), (600, 30), WHITE, 28)
                 cv2.putText(
-                    frame, f"ROV COLLISION ALLERT", (450, 35),
-                    fonts, 0.5, RED, 2)
+                frame, f"ROV COLLISION ALLERT", (450, 35),
+            fonts, 0.5, RED, 2)
                 master.arducopter_disarm()
                 print(">>>>>ROV DISARMED<<<<<<<")
 
+                
         # show the frame on the screen
     else:
         cv2.line(frame, (30, 30), (320, 30), GREEN, 32)
         cv2.line(frame, (30, 30), (320, 30), WHITE, 28)
         cv2.putText(
-            frame, f"Bucket not detected", (30, 35),
+                frame, f"Bucket not detected", (30, 35),
             fonts, 0.6, GREEN, 2)
     cv2.imshow("frame", frame)
 
