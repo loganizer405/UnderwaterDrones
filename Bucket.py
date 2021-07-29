@@ -157,7 +157,7 @@ def travel_in_x(xThrottle, to):
 
     print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
     velocity_array = []
-    recorded_distance = get_distance(velocity_array)
+    recorded_distance = get_distance(velocity_array, 0)
     for i in range(100000):
         initial_time = time.time()
         for j in range(100):
@@ -166,10 +166,10 @@ def travel_in_x(xThrottle, to):
 
         final_time = end_time-initial_time
         print("RECORDED DISTANCE: ", get_distance(velocity_array, final_time))
-        if to < get_distance(velocity_array):
+        if to < get_distance(velocity_array, final_time):
             break
 
-    print("REACHED DESIRED DISTANCE: ", get_distance(velocity_array))
+    print("REACHED DESIRED DISTANCE: ", get_distance(velocity_array, final_time))
 
     mode = 'ALT_HOLD'
     mode_id = master.mode_mapping()[mode]
