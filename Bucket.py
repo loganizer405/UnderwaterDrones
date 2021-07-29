@@ -72,7 +72,7 @@ def get_distance(array):
     time = len(array) * 0.1
     distance = 0
     for i in range(len(array)):
-        distance += array[i] * 0.1
+        distance += array[i] * 0.01
 
     return distance
 
@@ -148,7 +148,7 @@ def set_target_depth(desired_depth):
 
 
 def travel_in_x(xThrottle, to):
-    mode = 'MANUAL'
+    mode = 'ALT_HOLD'
     mode_id = master.mode_mapping()[mode]
     master.mav.set_mode_send(
         master.target_system,
@@ -159,7 +159,6 @@ def travel_in_x(xThrottle, to):
     velocity_array = []
     recorded_distance = get_distance(velocity_array)
     for i in range(100000):
-
         for j in range(100):
             manualControl(xThrottle, 0, 0)
 
@@ -190,7 +189,7 @@ print("<<<<<<ARMED>>>>>>")
 # Setting the mode to manual
 
 
-travel_in_x(5000, 5)
+travel_in_x(1000, 5)
 
 
 master.arducopter_disarm()
