@@ -160,8 +160,10 @@ def travel_in_x(xThrottle, to):
     recorded_distance = get_distance(velocity_array)
     for i in range(100000):
         manualControl(xThrottle, 0, 0)
-        if i % 10 == 0:
-            recorded_distance = get_distance(velocity_array)
+        manualControl(xThrottle, 0, 0)
+        manualControl(xThrottle, 0, 0)
+        manualControl(xThrottle, 0, 0)
+        manualControl(xThrottle, 0, 0)
 
         print("RECORDED DISTANCE: ", get_distance(velocity_array))
         if to < recorded_distance:
@@ -189,7 +191,7 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 # Setting the mode to manual
 
-time.sleep(0.2)
+
 travel_in_x(5000, 5)
 
 
