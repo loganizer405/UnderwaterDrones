@@ -1,10 +1,57 @@
 # install opencv "pip install opencv-python"
 import cv2
-
+from pymavlink import mavutil
+import time
 import imutils
 import numpy as np
+master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 
 
+def wait_conn():
+    """
+    Sends a ping to stabilish the UDP communication and awaits for a response
+    """
+    msg = None
+    while not msg:
+        master.mav.ping_send(
+            int(time.time() * 1e6),  # Unix time in microseconds
+            0,  # Ping number
+            0,  # Request ping of all systems
+            0  # Request ping of all components
+        )
+        msg = master.recv_match()
+        time.sleep(0.5)
+
+wait_conn()
+print("<<<<<<CONNECTION ESTABLISHED>>>>>>")
+boot_time = time.time()
+master.wait_heartbeat()
+print("<<<<<<<HEARTBEAT RECEIVED>>>>>>")
+
+
+# ARMING:
+master.arducopter_arm()
+time.sleep(1)
+print("<<<<<<ARMED>>>>>>")
+# Setting the mode to manual
+mode = 'MANUAL'
+mode_id = master.mode_mapping()[mode]
+master.mav.set_mode_send(
+    master.target_system,
+    mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+    mode_id)
+
+
+print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
+time.sleep(0.2)
+def manualControl(x, y, z):
+    master.mav.manual_control_send(
+        master.target_system,
+        x,  # x
+        y,  # y
+        z,  # z
+        0,  # r
+        0)  # buttons
 # distance from camera to object(face) measured
 # centimeter
 Known_distance = 122
@@ -89,7 +136,7 @@ cap = cv2.VideoCapture(0)
 # camera/video
 while True:
 
-    # reading the frame from camera
+    
     _, frame = cap.read()
     frame2 = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)         ##BGR to HSV
     lb = lower
@@ -104,7 +151,7 @@ while True:
 
     contours, hierarchy = cv2.findContours(opening, cv2.RETR_LIST,      ##Find contours
                                            cv2.CHAIN_APPROX_NONE)[-2:]
-
+    manualControl(0,750,0)
     if len(contours) != 0:
 
     # calling face_data function to find
@@ -131,13 +178,19 @@ while True:
             cv2.putText(
                 frame, f"Distance to bucket: {round(Distance,2)} CM", (30, 35),
             fonts, 0.6, RED, 2)
-
+            manualControl(0,750,0)
             if Distance<=50: 
                 cv2.line(frame, (450, 30), (600, 30), RED, 32)
                 cv2.line(frame, (450, 30), (600, 30), WHITE, 28)
                 cv2.putText(
                 frame, f"ROV COLLISION ALLERT", (450, 35),
             fonts, 0.5, RED, 2)
+                master.arducopter_disarm()
+                print(">>>>>ROV DISARMED<<<<<<<")
+                master.arducopter_arm()
+                manualControl(750,0,0)
+
+        manualControl(0,750,0)
                 
         # show the frame on the screen
     else:
@@ -147,6 +200,7 @@ while True:
                 frame, f"Bucket not detected", (30, 35),
             fonts, 0.6, GREEN, 2)
     cv2.imshow("frame", frame)
+    manualControl(0,750,0)
 
     # quit the program if you press 'q' on keyboard
     if cv2.waitKey(1) == ord("q"):
@@ -157,4 +211,3 @@ cap.release()
 
 # closing the the windows that are opened
 cv2.destroyAllWindows()
-
