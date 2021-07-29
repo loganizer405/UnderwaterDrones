@@ -102,7 +102,7 @@ def filter(image):
     return marker[1][0]
 
 # reading reference_image from directory
-ref_image = cv2.imread("bucket.jpg")
+ref_image = cv2.imread("OpenCV/bucket.jpg")
 
 # find the face width(pixels) in the reference_image
 ref_image_face_width = filter(ref_image)
