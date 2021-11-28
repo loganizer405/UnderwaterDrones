@@ -7,8 +7,8 @@ import math
 # Create the connection
 
 # Wait a heartbeat before sending commands
-master = mavutil.mavlink_connection('udpin:0.0.0.0:14550')
-#master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
+#master = mavutil.mavlink_connection('udpin:0.0.0.0:14550')
+master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 
 
 def wait_conn():
