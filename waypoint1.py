@@ -9,7 +9,7 @@ from pymavlink import mavutil
 
 # Set up option parsing to get connection string
 
-connection_string = "udpin:localhost:14550"
+connection_string = "udpout:0.0.0.0:9000"
 
 
 # Connect to the Vehicle
@@ -127,9 +127,7 @@ def arm_and_takeoff(aTargetAltitude):
 
     print("Basic pre-arm checks")
     # Don't let the user try to arm until autopilot is ready
-    while not vehicle.is_armable:
-        print(" Waiting for vehicle to initialise...")
-        time.sleep(1)
+    
 
     print("Arming motors")
     # Copter should arm in GUIDED mode
