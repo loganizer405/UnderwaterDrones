@@ -107,14 +107,17 @@ def travel_in_x(xThrottle, distanceTravel):
         mode_id)
 
     print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
-    distance_array = []
+    start = time.time()
+    velocity_array = []
     distance = 0
     while True:
-        start = time.time()
         manualControl(xThrottle, 0, 500, 0)
-        end = time.time()
-        distance_array.append(get_velocity()*(end-start))
-        distance = sum(distance_array)
+        elapsed = time.time() - start
+
+        velocity_array.append(get_velocity())
+        average_velocity = sum(velocity_array) / len(velocity_array)
+
+        distance = elapsed * average_velocity
         print("RECORDED DISTANCE: ", distance)
         if distance > 0.95*distanceTravel:
             break
@@ -166,5 +169,5 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 
-travel_in_x(500, 5)
+travel_in_x(100, 5)
 rotate(90)
