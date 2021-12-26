@@ -66,7 +66,7 @@ def get_distance(array):
     return distance
 
 
-def get_velocity(array):
+def get_velocity():
     velocity = 0
     while True:
         msg = master.recv_match()
@@ -84,7 +84,6 @@ def get_velocity(array):
         if not velocity == 0:
             break
 
-    array.append(velocity)
     return velocity
 
 
