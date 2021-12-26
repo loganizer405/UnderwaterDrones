@@ -27,13 +27,13 @@ def wait_conn():
         time.sleep(0.5)
 
 
-def manualControl(x, y, z):
+def manualControl(x, y, z, r):
     master.mav.manual_control_send(
         master.target_system,
         x,  # x
         y,  # y
         z,  # z
-        0,  # r
+        r,  # r
         0)  # buttons
 
 
@@ -57,15 +57,6 @@ def getDepth():
     return depth
 
 
-def get_distance(array):
-    get_velocity(array)
-    distance = 0
-    for i in range(len(array)):
-        distance += array[i] * 0.001
-
-    return distance
-
-
 def get_velocity():
     velocity = 0
     while True:
@@ -87,7 +78,27 @@ def get_velocity():
     return velocity
 
 
-def travel_in_x(xThrottle, to):
+def get_heading():
+    heading = 0
+    while True:
+        msg = master.recv_match()
+        if not msg:
+            continue
+        if msg.get_type() == 'VFR_HUD':
+            data = str(msg)
+            try:
+                data = data.split(":")
+                heading = data[3].split(",")[0]
+            except:
+                print('')
+
+            heading = float(heading)
+            break
+
+    return heading
+
+
+def travel_in_x(xThrottle, distanceTravel):
     mode = 'MANUAL'
     mode_id = master.mode_mapping()[mode]
     master.mav.set_mode_send(
@@ -96,16 +107,48 @@ def travel_in_x(xThrottle, to):
         mode_id)
 
     print("<<<<<<MODE CHANGED TO ", mode, ">>>>>>")
+    start = time.time()
     velocity_array = []
-    for i in range(10000):
-        manualControl(xThrottle, 0, 500)
-        print("RECORDED DISTANCE: ", get_distance(velocity_array))
-        if to < get_distance(velocity_array):
-            print("VELOCITY ARRAY:", velocity_array)
+    distance = 0
+    while True:
+        manualControl(xThrottle, 0, 500, 0)
+        elapsed = time.time() - start
+
+        velocity_array.append(get_velocity())
+        average_velocity = sum(velocity_array) / len(velocity_array)
+
+        distance = elapsed * average_velocity
+        print("RECORDED DISTANCE: ", distance)
+        if distance > 0.95*distanceTravel:
             break
 
-    print("REACHED DESIRED DISTANCE: ", get_distance(velocity_array))
+    print("REACHED DESIRED DISTANCE: ", distance)
 
+    mode = 'ALT_HOLD'
+    mode_id = master.mode_mapping()[mode]
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+
+
+def rotate(degrees):
+    mode = 'MANUAL'
+    mode_id = master.mode_mapping()[mode]
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+    start_heading = get_heading()
+    while True:
+        manualControl(0, 0, 500, 100)
+        current_heading = get_heading()
+        rotation = abs(start_heading-current_heading)
+
+        if rotation > 0.95 * degrees:
+            break
+
+    print("ROTATED: ", rotation)
     mode = 'ALT_HOLD'
     mode_id = master.mode_mapping()[mode]
     master.mav.set_mode_send(
@@ -126,4 +169,10 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 
-travel_in_x(10000, 10)
+travel_in_x(100, 5)
+rotate(90)
+travel_in_x(100, 5)
+rotate(90)
+travel_in_x(100, 5)
+rotate(90)
+travel_in_x(100, 5)

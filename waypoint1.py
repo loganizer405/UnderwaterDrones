@@ -9,8 +9,8 @@ from pymavlink import mavutil
 
 # Set up option parsing to get connection string
 
-connection_string = "udpout:0.0.0.0:9000"
-
+connection_string = "udpin:localhost:14550"
+master = mavutil.mavlink_connection('udpout:0.0.0.0:9000')
 
 # Connect to the Vehicle
 print('Connecting to vehicle on: %s' % connection_string)
@@ -120,6 +120,23 @@ def adds_square_mission(aLocation, aSize):
     cmds.upload()
 
 
+def manualControl(x, y, z):
+    mode = 'MANUAL'
+    mode_id = master.mode_mapping()[mode]
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+
+    master.mav.manual_control_send(
+        master.target_system,
+        x,  # x
+        y,  # y
+        z,  # z
+        0,  # r
+        0)  # buttons
+
+
 def arm_and_takeoff(aTargetAltitude):
     """
     Arms vehicle and fly to aTargetAltitude.
@@ -149,7 +166,7 @@ adds_square_mission(vehicle.location.global_frame, 50)
 
 
 # From Copter 3.3 you will be able to take off using a mission item. Plane must take off using a mission item (currently).
-arm_and_takeoff(10)
+
 
 print("Starting mission")
 # Reset mission set to first (0) waypoint
@@ -165,6 +182,7 @@ vehicle.mode = VehicleMode("AUTO")
 #   distance to the next waypoint.
 
 while True:
+    manualControl(1000, 0, 0)
     nextwaypoint = vehicle.commands.next
     print('Distance to waypoint (%s): %s' %
           (nextwaypoint, distance_to_current_waypoint()))
