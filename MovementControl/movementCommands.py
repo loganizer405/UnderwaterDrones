@@ -171,3 +171,8 @@ print("<<<<<<ARMED>>>>>>")
 
 travel_in_x(100, 5)
 rotate(90)
+travel_in_x(100, 5)
+rotate(90)
+travel_in_x(100, 5)
+rotate(90)
+travel_in_x(100, 5)
