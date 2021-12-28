@@ -99,7 +99,7 @@ def get_heading():
 
 
 def travel_in_x(xThrottle, distanceTravel):
-    mode = 'MANUAL'
+    mode = 'STABILIZE'
     mode_id = master.mode_mapping()[mode]
     master.mav.set_mode_send(
         master.target_system,
@@ -110,7 +110,7 @@ def travel_in_x(xThrottle, distanceTravel):
     start = time.time()
     velocity_array = []
     distance = 0
-    while True:
+    for i in range(10000000):
         manualControl(xThrottle, 0, 500, 0)
         elapsed = time.time() - start
 
@@ -133,18 +133,17 @@ def travel_in_x(xThrottle, distanceTravel):
 
 
 def rotate(degrees):
-    mode = 'MANUAL'
+    mode = 'ALT_HOLD'
     mode_id = master.mode_mapping()[mode]
     master.mav.set_mode_send(
         master.target_system,
         mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
         mode_id)
     start_heading = get_heading()
-    while True:
-        manualControl(0, 0, 500, 100)
+    for i in range(10000000):
         current_heading = get_heading()
         rotation = abs(start_heading-current_heading)
-
+        manualControl(0, 0, 500, -300)
         if rotation > 0.95 * degrees:
             break
 
@@ -169,10 +168,14 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 
-travel_in_x(100, 5)
-rotate(90)
-travel_in_x(100, 5)
-rotate(90)
-travel_in_x(100, 5)
-rotate(90)
-travel_in_x(100, 5)
+travel_in_x(1000, 2.5)
+rotate(85)
+travel_in_x(1000, 2.5)
+rotate(85)
+travel_in_x(1000, 2.5)
+rotate(85)
+travel_in_x(1000, 2.5)
+
+
+
+
