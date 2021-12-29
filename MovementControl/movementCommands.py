@@ -1,3 +1,4 @@
+from sys import _current_frames
 from pymavlink import mavutil
 import time
 import argparse
@@ -54,7 +55,7 @@ def getDepth():
 
         if not depth == 0:
             break
-    return depth
+    return float(depth)
 
 
 def get_velocity():
@@ -98,6 +99,55 @@ def get_heading():
     return heading
 
 
+def goDepth(depth):
+    mode = 'STABILIZE'
+    mode_id = master.mode_mapping()[mode]
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+    
+    current_depth = abs(getDepth())
+
+    if current_depth > depth:
+        for i in range(1000000):
+            manualControl(0,0,700, 0)
+            current_depth = abs(getDepth())
+
+            if current_depth < depth *0.95:
+                break
+        
+        print("REACHED DESIRED Depth: ", getDepth())
+
+        mode = 'ALT_HOLD'
+        mode_id = master.mode_mapping()[mode]
+        master.mav.set_mode_send(
+            master.target_system,
+            mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+            mode_id)
+
+    else:
+        for i in range(1000000):
+            manualControl(0,0,300, 0)
+            current_depth = abs(getDepth())
+
+            if current_depth > depth *0.95:
+                break
+        print("REACHED DESIRED Depth: ", getDepth())
+
+        mode = 'ALT_HOLD'
+        mode_id = master.mode_mapping()[mode]
+        master.mav.set_mode_send(
+            master.target_system,
+            mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+            mode_id)
+    
+
+
+    
+    
+
+
 def travel_in_x(xThrottle, distanceTravel):
     mode = 'STABILIZE'
     mode_id = master.mode_mapping()[mode]
@@ -132,7 +182,7 @@ def travel_in_x(xThrottle, distanceTravel):
         mode_id)
 
 
-def rotate(degrees):
+def rotateClockwise(degrees):
     mode = 'ALT_HOLD'
     mode_id = master.mode_mapping()[mode]
     master.mav.set_mode_send(
@@ -143,8 +193,8 @@ def rotate(degrees):
     for i in range(10000000):
         current_heading = get_heading()
         rotation = abs(start_heading-current_heading)
-        manualControl(0, 0, 500, -300)
-        if rotation > 0.95 * degrees:
+        manualControl(0, 0, 500, 250)
+        if rotation > 0.96 * degrees:
             break
 
     print("ROTATED: ", rotation)
@@ -154,6 +204,55 @@ def rotate(degrees):
         master.target_system,
         mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
         mode_id)
+
+def rotateCounterClockwise(degrees):
+    mode = 'ALT_HOLD'
+    mode_id = master.mode_mapping()[mode]
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+    start_heading = get_heading()
+    for i in range(10000000):
+        current_heading = get_heading()
+        print("Current heading: " , current_heading)
+        rotation = abs(start_heading-current_heading)
+        manualControl(0, 0, 500, -250)
+        if rotation > 0.96 * degrees:
+            break
+
+    print("ROTATED: ", rotation)
+    mode = 'ALT_HOLD'
+    mode_id = master.mode_mapping()[mode]
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+
+def maintainHeading(heading):
+    mode = 'ALT_HOLD'
+    mode_id = master.mode_mapping()[mode]
+    master.mav.set_mode_send(
+        master.target_system,
+        mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
+        mode_id)
+    
+    start_heading = get_heading()
+    angle = start_heading - heading
+
+    if angle < 0: 
+        rotateClockwise(abs(angle))
+    else: 
+        rotateCounterClockwise(angle)
+    
+        
+
+        
+
+    
+    
+
+
 
 
 wait_conn()
@@ -168,12 +267,13 @@ time.sleep(1)
 print("<<<<<<ARMED>>>>>>")
 
 
+maintainHeading(185)
 travel_in_x(1000, 2.5)
-rotate(85)
+rotateCounterClockwise(82)
 travel_in_x(1000, 2.5)
-rotate(85)
+rotateCounterClockwise(82)
 travel_in_x(1000, 2.5)
-rotate(85)
+rotateCounterClockwise(82)
 travel_in_x(1000, 2.5)
 
 
